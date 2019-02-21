@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "903321986511",
+    "firebase_url": "https://snuzik-45986.firebaseio.com",
+    "project_id": "snuzik-45986",
+    "storage_bucket": "snuzik-45986.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:903321986511:android:ab92df48e959de11",
+        "android_client_info": {
+          "package_name": "com.example.snapchat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "903321986511-hk2drrg1qc8h9ikdm7oo347rv9hcqcag.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.snapchat",
+            "certificate_hash": "7905ee8e1419944aa3060122f1889e6c96eb5fc9"
+          }
+        },
+        {
+          "client_id": "903321986511-bu6qmqh9l0cj568igd6hbkho3n399huj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBDoaYKqfvIW8_L1fXYXvS3YCv7F_FGJ6Q"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "903321986511-bu6qmqh9l0cj568igd6hbkho3n399huj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
