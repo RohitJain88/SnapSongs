@@ -36,7 +36,7 @@ public class RegistrationActivity extends AppCompatActivity {
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user=FirebaseAuth.getInstance().getCurrentUser();
                 if(user!=null){
-                    Intent intent=new Intent(getApplication(),MainActivity.class);
+                    Intent intent=new Intent(getApplication(),ChooseLoginRegistrationActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
                     finish();
@@ -62,6 +62,7 @@ public class RegistrationActivity extends AppCompatActivity {
                         if (!task.isSuccessful()) {
                             Toast.makeText(getApplication(), "Sign in ERROR", Toast.LENGTH_SHORT).show();
                         }else{
+
                             String userId=mAuth.getCurrentUser().getUid();
                             DatabaseReference currentUserDb=FirebaseDatabase.getInstance().getReference().child("users").child(userId);
                             Map userInfo=new HashMap<>();
@@ -69,6 +70,7 @@ public class RegistrationActivity extends AppCompatActivity {
                             userInfo.put("name",name);
                             userInfo.put("profileImageUrl","default");
                             currentUserDb.updateChildren(userInfo);
+                            Toast.makeText(getApplication(), "Registered successfully", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });

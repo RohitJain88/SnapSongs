@@ -5,23 +5,60 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".LoginActivity"
-    android:orientation="vertical">
-<EditText
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:id="@+id/email"
-    android:hint="Email"/>
+    android:orientation="vertical"
+    android:paddingLeft="18dp"
+    android:paddingRight="18dp"
+
+    android:background="@color/mediumpurple">
+
+
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/password"
-        android:hint="Password"/>
+        android:layout_marginTop="100dp"
+        android:padding="16dp"
+        android:ems="1"
+        android:inputType="textEmailAddress"
+        android:hint="Email"
+        android:background="#6ef4f4f4"
+        android:drawablePadding="30dp"
+        android:textColorHint="#fff"
+        android:id="@+id/email"
+        android:drawableLeft="@drawable/ic_person_white_24dp"
 
-    <Button
+        />
+
+    <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="login"
-        android:id="@+id/login"/>
+        android:layout_marginTop="16dp"
+        android:padding="16dp"
+        android:ems="1"
+        android:inputType="textPassword"
+        android:hint="......"
+        android:textColorHint="#fff"
+        android:background="#6ef4f4f4"
+        android:drawablePadding="78dp"
+        android:drawableLeft="@drawable/ic_lock_white_24dp"
+        android:id="@+id/password"
+       />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="Login"
+        android:textAllCaps="true"
+        android:textColor="#fff"
+        android:background="@drawable/background_login_two"
+        android:paddingLeft="48dp"
+        android:paddingRight="48dp"
+        android:layout_marginTop="16dp"
+        android:id="@+id/login"
+        />
+
+
+
 
 </LinearLayout>
