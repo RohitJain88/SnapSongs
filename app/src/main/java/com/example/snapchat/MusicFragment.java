@@ -44,6 +44,7 @@ public class MusicFragment extends Fragment {
         v.setMovementMethod(LinkMovementMethod.getInstance());
 
         Button mlogout = view.findViewById(R.id.logout);
+        Button mFindUsers = view.findViewById(R.id.findsUsers);
 //        Button mCapture= view.findViewById(R.id.capture);
         mlogout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,8 +52,23 @@ public class MusicFragment extends Fragment {
                 Logout();
             }
         });
-
+        mFindUsers.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FindUsers();
+            }
+        });
+        mlogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Logout();
+            }
+        });
         return view;
+    }
+
+    private void FindUsers() {
+
     }
 
 

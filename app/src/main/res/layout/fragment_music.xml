@@ -3,20 +3,31 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:background="@color/yellow">
+    android:background="@color/gray">
 
-
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
     <Button
-        android:layout_width="match_parent"
+        android:layout_weight="1"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Logout"
         android:id="@+id/logout"/>
 
+    <Button
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Find Users"
+        android:id="@+id/findsUsers"/>
+    </LinearLayout>
     <EditText
         android:id="@+id/EnterSong"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/logout"
+
         android:layout_centerVertical="true"
         android:layout_marginTop="200dp"
         android:autofillHints="@string/autofill"
