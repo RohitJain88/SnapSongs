@@ -12,9 +12,12 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewTreeObserver;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 
+import com.example.snapchat.MainActivity;
 import com.example.snapchat.R;
 
 public class SnapTabsView extends FrameLayout implements ViewPager.OnPageChangeListener {
@@ -46,6 +49,7 @@ public class SnapTabsView extends FrameLayout implements ViewPager.OnPageChangeL
         init();
     }
     public void setUpWithViewPager(final ViewPager viewPager){
+
         viewPager.addOnPageChangeListener(this);
         mStartImage.setOnClickListener(new OnClickListener() {
             @Override
@@ -61,13 +65,18 @@ public class SnapTabsView extends FrameLayout implements ViewPager.OnPageChangeL
                     viewPager.setCurrentItem(2);
             }
         });
+
         mCenterImage.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(viewPager.getCurrentItem()!=1)
                     viewPager.setCurrentItem(1);
+
+
+
             }
         });
+
     }
     private void init(){
         LayoutInflater.from(getContext()).inflate(R.layout.view_snap_tabs,this,true);
