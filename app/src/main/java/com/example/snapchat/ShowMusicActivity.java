@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.media.MediaMetadataRetriever;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
@@ -104,16 +105,33 @@ public class ShowMusicActivity extends AppCompatActivity {
                                     // if(!prev.getText().equals("Share"))
                                     prev.setText("Play");
                                 }
+                               MediaMetadataRetriever metaRetriever = new MediaMetadataRetriever();
+                               metaRetriever.setDataSource(obj.songUrl);
+                                String duration =
+                                        metaRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION);
+//                               // Log.v("time", duration);
+                                long dur = Long.parseLong(duration);
+                               String seconds = String.valueOf((dur % 60000) / 1000);
+                               int sec=Integer.parseInt(seconds);
+                                ArrayList<String> al = new ArrayList<>();
+                               if(sec<=30){
 
-                                ArrayList<String> al=new ArrayList<>();
-                                al.add(obj.songName);
-                                al.add(obj.artistName);
+                                   al.add(obj.songName);
+                                   al.add(obj.artistName);
+                                   al.add(obj.songUrl);
+                               }else {
+//
+//                                //Log.v("seconds", seconds);
+//                                String minutes = String.valueOf(dur / 60000);
 
-                                s=obj.songUrl.substring(0,obj.songUrl.length()-4)+"-1.mp3";
-                                al.add(s);
-                                String[] command={"-y","-i",obj.songUrl,"-ss","00:00","-to","00:15","-c","copy",s};
-                                execute(command);
+                                   al.add(obj.songName);
+                                   al.add(obj.artistName);
 
+                                   s = obj.songUrl.substring(0, obj.songUrl.length() - 4) + "-1.mp3";
+                                   al.add(s);
+                                   String[] command = {"-y", "-i", obj.songUrl, "-ss", "00:15", "-to", "00:30", "-c", "copy", s};
+                                   execute(command);
+                               }
                                 // bundle.putStringArray("cmd",command);
                                 bundle.putStringArrayList("info",al);
                                 intent.putExtras(bundle);
