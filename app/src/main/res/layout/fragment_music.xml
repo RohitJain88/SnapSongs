@@ -16,12 +16,7 @@
         android:text="Logout"
         android:id="@+id/logout"/>
 
-    <Button
-        android:layout_weight="1"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Add Users"
-        android:id="@+id/add"/>
+
     </LinearLayout>
 
     <ImageView
@@ -36,37 +31,24 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="300dp"
+        android:layout_centerHorizontal="true"
         android:orientation="vertical">
-        <LinearLayout
+        <EditText
+            android:id="@+id/song"
+            android:hint="Enter Song Name"
+
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Song Name"
-                />
-    <EditText
-        android:id="@+id/SongName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text=""
-        />
-        </LinearLayout>
-    <EditText
-        android:id="@+id/EnterSong"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+            android:textColorHint="@color/yellow"
+            />
+        <EditText
+            android:id="@+id/artist"
+            android:hint="Enter Artist Name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColorHint="@color/yellow"
+            />
 
-        android:layout_centerVertical="true"
-        android:layout_marginTop="200dp"
-        android:autofillHints="@string/autofill"
-        android:layout_gravity="center"
-        android:inputType="text"
-        android:textIsSelectable="true"
-        android:linksClickable="true"
-        android:autoLink="web|email"
-        android:text="" />
 
     </LinearLayout>
 

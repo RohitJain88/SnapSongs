@@ -9,30 +9,7 @@
         android:id="@+id/listView"
         android:layout_width="match_parent"
         android:layout_height="90dp"></ListView>
-    <EditText
-        android:id="@+id/song"
-        android:hint="Enter Song Name"
-        android:layout_centerHorizontal="true"
-        android:translationY="200dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        />
-    <EditText
-        android:id="@+id/artist"
-        android:hint="Enter Artist Name"
-        android:layout_centerHorizontal="true"
-        android:translationY="270dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        />
-    <EditText
-        android:id="@+id/url"
-        android:hint="Enter URL"
-        android:layout_centerHorizontal="true"
-        android:translationY="340dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        />
+
     <Button
         android:id="@+id/back"
         android:layout_width="wrap_content"

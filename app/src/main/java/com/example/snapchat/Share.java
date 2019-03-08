@@ -66,10 +66,10 @@ public class Share extends AppCompatActivity {
 
         EditText song=(EditText)findViewById(R.id.song);
         EditText artist=(EditText)findViewById(R.id.artist);
-        EditText url=(EditText)findViewById(R.id.url);
+
         song.setText(arrayList.get(0));
         artist.setText(arrayList.get(1));
-        url.setText(arrayList.get(2));
+
         Button back=(Button)findViewById(R.id.back);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
