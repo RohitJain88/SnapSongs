@@ -42,9 +42,9 @@ public class MusicFragment extends Fragment {
         EditText v = view.findViewById(R.id.EnterSong);
         v.setText(Html.fromHtml(v.getText().toString()));
         v.setMovementMethod(LinkMovementMethod.getInstance());
-
+        ImageView mPost = view.findViewById(R.id.post);
         Button mlogout = view.findViewById(R.id.logout);
-        Button mFindUsers = view.findViewById(R.id.findsUsers);
+        //Button mPost = view.findViewById(R.id.post);
 //        Button mCapture= view.findViewById(R.id.capture);
         mlogout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -52,10 +52,10 @@ public class MusicFragment extends Fragment {
                 Logout();
             }
         });
-        mFindUsers.setOnClickListener(new View.OnClickListener() {
+        mPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FindUsers();
+                MusicPlayer();
             }
         });
         mlogout.setOnClickListener(new View.OnClickListener() {
@@ -69,6 +69,15 @@ public class MusicFragment extends Fragment {
 
     private void FindUsers() {
 
+    }
+
+    private void MusicPlayer(){
+        Intent intent = new Intent(getContext() ,ShowMusicActivity.class);
+
+        //clear all other activities which were on top of stack
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+        return;
     }
 
 

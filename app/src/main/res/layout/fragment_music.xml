@@ -20,8 +20,8 @@
         android:layout_weight="1"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Find Users"
-        android:id="@+id/findsUsers"/>
+        android:text="Add Users"
+        android:id="@+id/add"/>
     </LinearLayout>
 
     <ImageView
@@ -30,7 +30,7 @@
         android:src="@drawable/profile"
         android:layout_marginTop="150dp"
         android:layout_centerHorizontal="true"
-
+        android:id="@+id/post"
         />
     <LinearLayout
         android:layout_width="wrap_content"

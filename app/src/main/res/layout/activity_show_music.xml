@@ -4,11 +4,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ShowMusicActivity">
-    <ImageView
+    tools:context=".ShowMusicActivity"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_weight="1"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="fitXY"
-        android:id="@+id/musicaptured"/>
+        android:layout_height="match_parent">
+
+    </android.support.v7.widget.RecyclerView>
+
+    <SeekBar
+        android:id="@+id/seekBar"
+        android:layout_weight="0"
+        style="@style/Base.Widget.AppCompat.SeekBar.Discrete"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
 </LinearLayout>
