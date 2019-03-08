@@ -75,7 +75,7 @@ public class Share extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent;
-                intent = new Intent(Share.this,MainActivity.class);
+                intent = new Intent(Share.this,ShowMusicActivity.class);
                 startActivity(intent);
             }
         });
