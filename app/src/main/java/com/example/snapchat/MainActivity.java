@@ -1,6 +1,10 @@
 package com.example.snapchat;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.media.MediaPlayer;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -9,11 +13,25 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 
 import com.example.snapchat.view.SnapTabsView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
     FragmentPagerAdapter adapterViewPager;
+    ListView listView;
+    List<String> list;
+    String str;
+    ListAdapter listAdapter;
+    MediaPlayer mediaPlayer;
+    Button back;
+    ArrayList<String> arrayList = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,14 +39,47 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         final View background = findViewById(R.id.background_view);
-        ViewPager viewPager = findViewById(R.id.viewPager);
+        final ViewPager viewPager = findViewById(R.id.viewPager);
         adapterViewPager = new MyPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(adapterViewPager);
 
         SnapTabsView snapTabsView=findViewById(R.id.snap_tabs);
         snapTabsView.setUpWithViewPager(viewPager);
 
+        Bundle p = getIntent().getExtras();
+        if(p!=null)
+         arrayList =p.getStringArrayList("info");
+        ImageView mCenterImage=(ImageView)findViewById(R.id.vst_center_image);
         viewPager.setCurrentItem(1);
+        if(p!=null){
+        mCenterImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(viewPager.getCurrentItem()!=1)
+                    viewPager.setCurrentItem(1);
+                else{
+                    try {
+                        if(mediaPlayer!=null){
+                            mediaPlayer.stop();
+                            mediaPlayer.reset();
+                            mediaPlayer.release();
+                            mediaPlayer=null;
+                        }
+
+                        mediaPlayer = new MediaPlayer();
+                        mediaPlayer.setDataSource(arrayList.get(2));
+                        mediaPlayer.prepareAsync();
+                        mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                            @Override
+                            public void onPrepared(MediaPlayer mp) {
+                                mp.start();
+                            }
+                        });
+                    }catch (Exception e){}
+                }
+
+            }
+        });}
 
 
         final int colorBlue = ContextCompat.getColor(this, R.color.lightblue);
@@ -60,7 +111,18 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         viewPager.setCurrentItem(1);
+        CheckPermission();
     }
+
+    private void CheckPermission(){
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) !=
+                PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 123);
+            return;
+        }
+    }
+
 
     public static class MyPagerAdapter extends FragmentPagerAdapter {
 

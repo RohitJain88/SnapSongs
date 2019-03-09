@@ -2,6 +2,8 @@ package com.example.snapchat.view;
 
 import android.animation.ArgbEvaluator;
 import android.content.Context;
+import android.media.MediaPlayer;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
@@ -19,6 +21,8 @@ import android.widget.PopupMenu;
 
 import com.example.snapchat.MainActivity;
 import com.example.snapchat.R;
+
+import java.util.ArrayList;
 
 public class SnapTabsView extends FrameLayout implements ViewPager.OnPageChangeListener {
 
@@ -66,17 +70,8 @@ public class SnapTabsView extends FrameLayout implements ViewPager.OnPageChangeL
             }
         });
 
-        mCenterImage.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(viewPager.getCurrentItem()!=1)
-                    viewPager.setCurrentItem(1);
 
 
-
-
-            }
-        });
 
     }
     private void init(){

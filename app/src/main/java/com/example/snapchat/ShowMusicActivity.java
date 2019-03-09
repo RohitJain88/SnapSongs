@@ -12,6 +12,7 @@ import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -21,6 +22,7 @@ import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.Toast;
 
+import com.example.snapchat.view.SnapTabsView;
 import com.github.hiteshsondhi88.libffmpeg.ExecuteBinaryResponseHandler;
 import com.github.hiteshsondhi88.libffmpeg.FFmpeg;
 import com.github.hiteshsondhi88.libffmpeg.LoadBinaryResponseHandler;
@@ -41,6 +43,7 @@ public class ShowMusicActivity extends AppCompatActivity {
     Handler handler=new Handler();
     FFmpeg ffmpeg;
     String s="";
+    //ArrayList<String> al;
 
 
 
@@ -95,7 +98,7 @@ public class ShowMusicActivity extends AppCompatActivity {
                                 mediaPlayer.release();
                                 mediaPlayer=null;
                             }else if(b.getText().toString().equals("Share")){
-                                Intent intent= new Intent(ShowMusicActivity.this, Share.class);
+                                Intent intent= new Intent(ShowMusicActivity.this, MainActivity.class);
                                 Bundle bundle=new Bundle();
                                 if(mediaPlayer!= null && mediaPlayer.isPlaying()){
                                     mediaPlayer.stop();
@@ -113,13 +116,14 @@ public class ShowMusicActivity extends AppCompatActivity {
                                 long dur = Long.parseLong(duration);
                                String seconds = String.valueOf((dur % 60000) / 1000);
                                int sec=Integer.parseInt(seconds);
+                               System.out.println(sec);
                                 ArrayList<String> al = new ArrayList<>();
-                               if(sec<=30){
+                             /*  if(sec<=30){
 
                                    al.add(obj.songName);
                                    al.add(obj.artistName);
                                    al.add(obj.songUrl);
-                               }else {
+                               }else {*/
 //
 //                                //Log.v("seconds", seconds);
 //                                String minutes = String.valueOf(dur / 60000);
@@ -131,10 +135,12 @@ public class ShowMusicActivity extends AppCompatActivity {
                                    al.add(s);
                                    String[] command = {"-y", "-i", obj.songUrl, "-ss", "00:15", "-to", "00:30", "-c", "copy", s};
                                    execute(command);
-                               }
+                          //     }
                                 // bundle.putStringArray("cmd",command);
                                 bundle.putStringArrayList("info",al);
                                 intent.putExtras(bundle);
+                               // MusicFragment f = new MusicFragment();
+                              //  f.setArguments(bundle);
                                 startActivity(intent);
                             }
                             else if(mediaPlayer==null || (b.getText().toString().equals("Play") && !mediaPlayer.isPlaying())) {
@@ -192,7 +198,6 @@ public class ShowMusicActivity extends AppCompatActivity {
 
 
     }
-
 
 
     public void execute(String[] cmd){
