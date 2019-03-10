@@ -24,7 +24,7 @@
         <activity android:name=".RegistrationActivity" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".ChooseLoginRegistrationActivity" />
-        <activity android:name=".DisplayImageActivity"/>
+        <activity android:name=".DisplaySongActivity"/>
         <activity android:name=".FindUsersActivity"/>
 
         <activity android:name=".SplashScreenActivity">

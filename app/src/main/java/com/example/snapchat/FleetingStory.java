@@ -65,7 +65,7 @@ public class FleetingStory extends AppCompatActivity {
             @Override
             public void run() {
                 if(!flag) {
-                    if(arrayList.get(3).equals("main")){
+                   // if(arrayList.get(3).equals("main")){
                     Intent i = new Intent(FleetingStory.this, MainActivity.class);
                     Bundle bundle = new Bundle();
                     //Intent intent= new Intent(FleetingStory.this, MainActivity.class);
@@ -75,9 +75,9 @@ public class FleetingStory extends AppCompatActivity {
                     al.add(arrayList.get(2));//Trimmed Song
                     bundle.putStringArrayList("info", al);
                     i.putExtras(bundle);
-                    startActivity(i);}
-                    else{
-                        Intent i = new Intent(FleetingStory.this, DisplayImageActivity.class);
+                    startActivity(i);//}
+                  /*  else{
+                        Intent i = new Intent(FleetingStory.this, DisplaySongActivity.class);
                         Bundle bundle = new Bundle();
                         //Intent intent= new Intent(FleetingStory.this, MainActivity.class);
                         ArrayList<String> al = new ArrayList<>();
@@ -87,7 +87,7 @@ public class FleetingStory extends AppCompatActivity {
                         bundle.putStringArrayList("info", al);
                         i.putExtras(bundle);
                         startActivity(i);
-                    }
+                    }*/
                     finish();
                 }
             }

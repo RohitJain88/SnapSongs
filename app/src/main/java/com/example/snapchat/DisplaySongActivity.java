@@ -1,12 +1,15 @@
 package com.example.snapchat;
 
 import android.content.Intent;
+import android.graphics.drawable.AnimationDrawable;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.google.firebase.database.DataSnapshot;
@@ -17,7 +20,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class DisplayImageActivity extends AppCompatActivity {
+public class DisplaySongActivity extends AppCompatActivity {
 
     String userId;
 
@@ -25,11 +28,16 @@ public class DisplayImageActivity extends AppCompatActivity {
 
     //flag to check whether we have found the first image
     private boolean started = false;
+    MediaPlayer mediaPlayer;
+    boolean flag=false;
+    private static int TIME_OUT = 15000;
+    AnimationDrawable animationDrawable;
+    FrameLayout frameLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.activity_display_image);
+        setContentView(R.layout.activity_fleeting_story);
 
         //Get the Bundle Information passed from StoryHolder
         Bundle b = getIntent().getExtras();
@@ -73,8 +81,65 @@ public class DisplayImageActivity extends AppCompatActivity {
                             songUrlList.add("fragment");
                             Bundle bundle =new Bundle();
                             bundle.putStringArrayList("fleet",songUrlList);
+                            frameLayout = (FrameLayout) findViewById(R.id.myFrameLay);
+                            animationDrawable = (AnimationDrawable) frameLayout.getBackground();
+                            TextView song=(TextView)findViewById(R.id.SongText);
+                            song.setText(songName.substring(0,songName.length()-4));
+                            TextView artist=(TextView)findViewById(R.id.ArtistText);
+                            artist.setText(songArtist);
+                            animationDrawable.setEnterFadeDuration(5000);
+                            animationDrawable.setExitFadeDuration(2000);
+                            animationDrawable.start();
+                            try {
+                                if(mediaPlayer!=null){
+                                    mediaPlayer.stop();
+                                    mediaPlayer.reset();
+                                    mediaPlayer.release();
+                                    mediaPlayer=null;
+                                }
 
-                            showStory(bundle);
+                                mediaPlayer = new MediaPlayer();
+                                mediaPlayer.setDataSource(songUrl);
+                                mediaPlayer.prepareAsync();
+                                mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                                    @Override
+                                    public void onPrepared(MediaPlayer mp) {
+                                        mp.start();
+                                    }
+                                });
+                            }catch (Exception e){}
+                            new Handler().postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    if(!flag) {
+                                        // if(arrayList.get(3).equals("main")){
+                                        Intent i = new Intent(DisplaySongActivity.this, StoryFragment.class);
+//                                        Bundle bundle = new Bundle();
+//                                        //Intent intent= new Intent(FleetingStory.this, MainActivity.class);
+//                                        ArrayList<String> al = new ArrayList<>();
+//                                        al.add(arrayList.get(0));//Song Name
+//                                        al.add(arrayList.get(1));//Artist Name
+//                                        al.add(arrayList.get(2));//Trimmed Song
+//                                        bundle.putStringArrayList("info", al);
+//                                        i.putExtras(bundle);
+                                        startActivity(i);//}
+                  /*  else{
+                        Intent i = new Intent(FleetingStory.this, DisplaySongActivity.class);
+                        Bundle bundle = new Bundle();
+                        //Intent intent= new Intent(FleetingStory.this, MainActivity.class);
+                        ArrayList<String> al = new ArrayList<>();
+                        al.add(arrayList.get(0));//Song Name
+                        al.add(arrayList.get(1));//Artist Name
+                        al.add(arrayList.get(2));//Trimmed Song
+                        bundle.putStringArrayList("info", al);
+                        i.putExtras(bundle);
+                        startActivity(i);
+                    }*/
+                                        finish();
+                                    }
+                                }
+                            }, TIME_OUT);
+                            //showStory(bundle);
 //                            if(!started){
 //                                started = true;
 //                                initializeDisplay();
@@ -93,6 +158,15 @@ public class DisplayImageActivity extends AppCompatActivity {
         Intent intent = new Intent(getApplication(),FleetingStory.class);
         intent.putExtras(b1);
         startActivity(intent);
+    }
+    public void onBackPressed(){
+        if(mediaPlayer!=null){
+            flag=true;
+            mediaPlayer.stop();
+
+        }
+        super.onBackPressed();
+         this.finish();
     }
 
 //    private int imageIterator=0;
