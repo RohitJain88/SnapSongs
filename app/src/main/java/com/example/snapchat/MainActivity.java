@@ -1,6 +1,7 @@
 package com.example.snapchat;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.media.MediaPlayer;
 import android.support.design.widget.TabLayout;
@@ -33,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
     Button back;
     ArrayList<String> arrayList = null;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,10 +47,11 @@ public class MainActivity extends AppCompatActivity {
 
         SnapTabsView snapTabsView=findViewById(R.id.snap_tabs);
         snapTabsView.setUpWithViewPager(viewPager);
-
         Bundle p = getIntent().getExtras();
+
         if(p!=null)
          arrayList =p.getStringArrayList("info");
+
         ImageView mCenterImage=(ImageView)findViewById(R.id.vst_center_image);
         viewPager.setCurrentItem(1);
         if(p!=null){
@@ -58,6 +61,15 @@ public class MainActivity extends AppCompatActivity {
                 if(viewPager.getCurrentItem()!=1)
                     viewPager.setCurrentItem(1);
                 else{
+                    Bundle bundle=new Bundle();
+                    Intent intent= new Intent(MainActivity.this, FleetingStory.class);
+                    ArrayList<String> al = new ArrayList<>();
+                    al.add(arrayList.get(0));
+                    al.add(arrayList.get(1));
+                    al.add(arrayList.get(2));
+                    bundle.putStringArrayList("fleet",al);
+                    intent.putExtras(bundle);
+
                     try {
                         if(mediaPlayer!=null){
                             mediaPlayer.stop();
@@ -76,6 +88,7 @@ public class MainActivity extends AppCompatActivity {
                             }
                         });
                     }catch (Exception e){}
+                    startActivity(intent);
                 }
 
             }
