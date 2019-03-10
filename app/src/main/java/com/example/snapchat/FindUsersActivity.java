@@ -2,14 +2,11 @@ package com.example.snapchat;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -25,7 +22,8 @@ import com.google.firebase.database.Query;
 
 import java.util.ArrayList;
 
-public class ChatFragment extends Fragment {
+public class FindUsersActivity extends AppCompatActivity {
+
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -33,47 +31,31 @@ public class ChatFragment extends Fragment {
     EditText mInput;
     private FirebaseAuth auth;
     private static final String TAG = "FindUserActivity";
-
-    public static ChatFragment newInstance(){
-        ChatFragment fragment=new ChatFragment();
-        return fragment;
-
-
-
-
-
-
-    }
-
-
     @Override
-    public View onCreateView( LayoutInflater inflater,  ViewGroup container,  Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_find_users);
 
-        View view =inflater.inflate(R.layout.fragment_chat,container,false);
-        mInput = view.findViewById(R.id.input);
-        Button mSearch = view.findViewById(R.id.search);
+        mInput = findViewById(R.id.input);
+        Button mSearch = findViewById(R.id.search);
         auth = FirebaseAuth.getInstance();
 
-        mRecyclerView = view.findViewById(R.id.recyclerView);
+        mRecyclerView = findViewById(R.id.recyclerView);
         mRecyclerView.setNestedScrollingEnabled(false);
         mRecyclerView.setHasFixedSize(false);
-        mLayoutManager = new LinearLayoutManager(getContext());
+        mLayoutManager = new LinearLayoutManager(getApplication());
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mAdapter = new FollowAdapter(getDataSet(), getContext());
+        mAdapter = new FollowAdapter(getDataSet(), getApplication());
         mRecyclerView.setAdapter(mAdapter);
-
         mSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                findUser();
+                clear();
+                listenForData();
             }
         });
-        return view;
     }
 
-    private void findUser() {
-
-    }
 
     //This method is used to search emails based on the entered text
     private void listenForData() {
@@ -122,7 +104,6 @@ public class ChatFragment extends Fragment {
             }
         });
     }
-
     //This method clears the search result on each search done
     private void clear() {
         int size = this.results.size();
@@ -138,4 +119,5 @@ public class ChatFragment extends Fragment {
         listenForData();
         return results;
     }
+
 }

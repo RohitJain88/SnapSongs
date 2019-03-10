@@ -40,6 +40,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        UserInformation userInformationListener = new UserInformation();
+        userInformationListener.startFetching();
+
         final View background = findViewById(R.id.background_view);
         final ViewPager viewPager = findViewById(R.id.viewPager);
         adapterViewPager = new MyPagerAdapter(getSupportFragmentManager());
@@ -48,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
         SnapTabsView snapTabsView=findViewById(R.id.snap_tabs);
         snapTabsView.setUpWithViewPager(viewPager);
         Bundle p = getIntent().getExtras();
+
 
         if(p!=null)
          arrayList =p.getStringArrayList("info");
@@ -67,27 +71,11 @@ public class MainActivity extends AppCompatActivity {
                     al.add(arrayList.get(0));
                     al.add(arrayList.get(1));
                     al.add(arrayList.get(2));
+                    al.add("main");
                     bundle.putStringArrayList("fleet",al);
                     intent.putExtras(bundle);
 
-                    try {
-                        if(mediaPlayer!=null){
-                            mediaPlayer.stop();
-                            mediaPlayer.reset();
-                            mediaPlayer.release();
-                            mediaPlayer=null;
-                        }
 
-                        mediaPlayer = new MediaPlayer();
-                        mediaPlayer.setDataSource(arrayList.get(2));
-                        mediaPlayer.prepareAsync();
-                        mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-                            @Override
-                            public void onPrepared(MediaPlayer mp) {
-                                mp.start();
-                            }
-                        });
-                    }catch (Exception e){}
                     startActivity(intent);
                 }
 
@@ -126,6 +114,7 @@ public class MainActivity extends AppCompatActivity {
         viewPager.setCurrentItem(1);
         CheckPermission();
     }
+
 
     private void CheckPermission(){
 

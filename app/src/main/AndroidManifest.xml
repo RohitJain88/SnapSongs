@@ -20,11 +20,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".FleetingStory"></activity>
-        <activity android:name=".Share" />
         <activity android:name=".ShowMusicActivity" />
         <activity android:name=".RegistrationActivity" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".ChooseLoginRegistrationActivity" />
+        <activity android:name=".DisplayImageActivity"/>
+        <activity android:name=".FindUsersActivity"/>
+
         <activity android:name=".SplashScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

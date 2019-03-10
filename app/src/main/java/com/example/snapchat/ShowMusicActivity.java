@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.media.MediaMetadataRetriever;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -17,6 +18,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.format.DateFormat;
 import android.view.View;
 import android.widget.Button;
 import android.widget.SeekBar;
@@ -28,9 +30,23 @@ import com.github.hiteshsondhi88.libffmpeg.FFmpeg;
 import com.github.hiteshsondhi88.libffmpeg.LoadBinaryResponseHandler;
 import com.github.hiteshsondhi88.libffmpeg.exceptions.FFmpegCommandAlreadyRunningException;
 import com.github.hiteshsondhi88.libffmpeg.exceptions.FFmpegNotSupportedException;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 
 public class ShowMusicActivity extends AppCompatActivity {
 
@@ -44,6 +60,9 @@ public class ShowMusicActivity extends AppCompatActivity {
     FFmpeg ffmpeg;
     String s="";
     //ArrayList<String> al;
+    StorageReference songRef;
+    String Uid;
+    private static int TIME_OUT=2000;
 
 
 
@@ -132,9 +151,17 @@ public class ShowMusicActivity extends AppCompatActivity {
                                    al.add(obj.artistName);
 
                                    s = obj.songUrl.substring(0, obj.songUrl.length() - 4) + "-1.mp3";
+
                                    al.add(s);
                                    String[] command = {"-y", "-i", obj.songUrl, "-ss", "00:15", "-to", "00:30", "-c", "copy", s};
                                    execute(command);
+                                   new Handler().postDelayed(new Runnable() {
+                                       @Override
+                                       public void run() {
+                                           saveToStories(obj.songName,obj.artistName,s);
+                                       }
+                                   }, TIME_OUT);
+
                           //     }
                                 // bundle.putStringArray("cmd",command);
                                 bundle.putStringArrayList("info",al);
@@ -196,6 +223,73 @@ public class ShowMusicActivity extends AppCompatActivity {
         Thread t= new MyThread();
         t.start();
 
+
+    }
+
+    private void saveToStories(final String songName, final String artistName, String s) {
+        Uid = FirebaseAuth.getInstance().getUid();
+        final DatabaseReference userStoryDb = FirebaseDatabase.getInstance().getReference().child("users").child(Uid).child("story");
+        final String key = userStoryDb.push().getKey();
+
+//        sRef = FirebaseStorage.getInstance().getReference().child("captures").child(key);
+
+//        pathtToSong(s, songRef, songName, artistName);
+
+//        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+//        //rotateBitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+//        byte[] dataToUpload = baos.toByteArray();
+//        UploadTask uploadTask = filePath.putBytes(dataToUpload);
+        Uri file = Uri.fromFile(new File(s));
+        songRef = FirebaseStorage.getInstance().getReference().child("captureSongs/"+file.getLastPathSegment());
+        UploadTask uploadTask = songRef.putFile(file);
+
+
+// Register observers to listen for when the download is done or if it fails
+        uploadTask.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Handle unsuccessful uploads
+            }
+        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                //Uri imageUrl = taskSnapshot.getDownloadUrl();
+                final Calendar cal = Calendar.getInstance(Locale.ENGLISH);
+                songRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        Uri songUrl = uri;
+
+                        Long currentTimestamp = System.currentTimeMillis();
+                        Long endTimestamp = currentTimestamp + (24*60*60*1000);
+
+
+                        cal.setTimeInMillis(currentTimestamp);
+                        String starttime = DateFormat.format("dd-MM-yyyy hh:mm:ss", cal).toString();
+                        cal.setTimeInMillis(endTimestamp);
+                        String endtime = DateFormat.format("dd-MM-yyyy hh:mm:ss", cal).toString();
+
+                        Map<String, Object> mapToUpload = new HashMap<>();
+                        mapToUpload.put("songUrl",songUrl.toString());
+                        mapToUpload.put("songName",songName);
+                        mapToUpload.put("songArtist",artistName.toString());
+                        mapToUpload.put("timestampBeg",currentTimestamp);
+                        mapToUpload.put("timestampEnd",endTimestamp);
+                        mapToUpload.put("timeBeg",starttime);
+                        mapToUpload.put("timeEnd",endtime);
+
+
+                        userStoryDb.child(key).setValue(mapToUpload);
+                    }
+                });
+            }
+        });
+
+
+
+    }
+
+    private void pathtToSong(String path, StorageReference sRef, final String songName, final String artistName ) {
 
     }
 

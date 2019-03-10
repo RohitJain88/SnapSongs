@@ -95,11 +95,21 @@ public class MusicFragment extends Fragment {
                 Logout();
             }
         });
+        Button mFindUsers = view.findViewById(R.id.findUsers);
+        mFindUsers.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FindUsers();
+            }
+        });
         return view;
     }
 
     private void FindUsers() {
-
+        Intent intent = new Intent(getContext(), FindUsersActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+        return;
     }
 
     private void CheckPermission(){
