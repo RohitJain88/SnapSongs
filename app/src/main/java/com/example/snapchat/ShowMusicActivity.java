@@ -19,6 +19,7 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.SeekBar;
@@ -33,8 +34,11 @@ import com.github.hiteshsondhi88.libffmpeg.exceptions.FFmpegNotSupportedExceptio
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -64,7 +68,8 @@ public class ShowMusicActivity extends AppCompatActivity {
     StorageReference songRef;
     String Uid;
     private static int TIME_OUT=2000;
-
+    String TAG ="ShowMusicActiviyt";
+    Map<String, Object> mapToUpload;
 
 
     @Override
@@ -136,7 +141,7 @@ public class ShowMusicActivity extends AppCompatActivity {
                                 long dur = Long.parseLong(duration);
                                String seconds = String.valueOf((dur % 60000) / 1000);
                                int sec=Integer.parseInt(seconds);
-                               System.out.println(sec);
+                              // System.out.println(sec);
                                 ArrayList<String> al = new ArrayList<>();
                              /*  if(sec<=30){
 
@@ -231,6 +236,7 @@ public class ShowMusicActivity extends AppCompatActivity {
     private void saveToStories(final String songName, final String artistName, String s) {
         Uid = FirebaseAuth.getInstance().getUid();
         final DatabaseReference userStoryDb = FirebaseDatabase.getInstance().getReference().child("users").child(Uid).child("story");
+        final DatabaseReference userStoryDb1 = FirebaseDatabase.getInstance().getReference().child("users").child(Uid);
         final String key = userStoryDb.push().getKey();
 
 //        sRef = FirebaseStorage.getInstance().getReference().child("captures").child(key);
@@ -271,7 +277,7 @@ public class ShowMusicActivity extends AppCompatActivity {
                         cal.setTimeInMillis(endTimestamp);
                         String endtime = DateFormat.format("dd-MM-yyyy hh:mm:ss", cal).toString();
 
-                        Map<String, Object> mapToUpload = new HashMap<>();
+                        mapToUpload = new HashMap<>();
                         mapToUpload.put("songUrl",songUrl.toString());
                         mapToUpload.put("songName",songName);
                         mapToUpload.put("songArtist",artistName.toString());
@@ -279,9 +285,28 @@ public class ShowMusicActivity extends AppCompatActivity {
                         mapToUpload.put("timestampEnd",endTimestamp);
                         mapToUpload.put("timeBeg",starttime);
                         mapToUpload.put("timeEnd",endtime);
+                        //Log.d(TAG, "onSuccess: "+ userStoryDb);
+                        userStoryDb1.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                if(dataSnapshot.hasChild("story")){
+                                    Log.d(TAG, "onDataChange: Coming");
+                                    userStoryDb.removeValue();
+                                    userStoryDb.child(key).setValue(mapToUpload);
+                                }
+                                else {
+                                    Log.d(TAG, "onDataChange: No stories");
+                                    userStoryDb.child(key).setValue(mapToUpload);
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                            }
+                        });
 
 
-                        userStoryDb.child(key).setValue(mapToUpload);
                     }
                 });
             }

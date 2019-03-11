@@ -61,6 +61,7 @@ public class FindUsersActivity extends AppCompatActivity {
     private void listenForData() {
         DatabaseReference userDb = FirebaseDatabase.getInstance().getReference().child("users");
         Query query = userDb.orderByChild("email").startAt(mInput.getText().toString()).endAt(mInput.getText().toString() + "\uf8ff");
+        Log.d(TAG, "listenForData: "+mInput.getText());
         query.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, String s) {

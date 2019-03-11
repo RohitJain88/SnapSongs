@@ -74,6 +74,7 @@ public class ChatFragment extends Fragment {
 
     private void findUser() {
 
+
     }
 
     //This method is used to search emails based on the entered text
