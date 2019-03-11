@@ -59,6 +59,7 @@ public class ShowMusicActivity extends AppCompatActivity {
     Handler handler=new Handler();
     FFmpeg ffmpeg;
     String s="";
+    String songName="",artistName="";
     //ArrayList<String> al;
     StorageReference songRef;
     String Uid;
@@ -151,16 +152,17 @@ public class ShowMusicActivity extends AppCompatActivity {
                                    al.add(obj.artistName);
 
                                    s = obj.songUrl.substring(0, obj.songUrl.length() - 4) + "-1.mp3";
-
+                                    songName=obj.songName;
+                                    artistName=obj.artistName;
                                    al.add(s);
                                    String[] command = {"-y", "-i", obj.songUrl, "-ss", "00:15", "-to", "00:30", "-c", "copy", s};
                                    execute(command);
-                                   new Handler().postDelayed(new Runnable() {
-                                       @Override
-                                       public void run() {
-                                           saveToStories(obj.songName,obj.artistName,s);
-                                       }
-                                   }, TIME_OUT);
+//                                   new Handler().postDelayed(new Runnable() {
+//                                       @Override
+//                                       public void run() {
+//                                        //   saveToStories(obj.songName,obj.artistName,s);
+//                                       }
+//                                   }, TIME_OUT);
 
                           //     }
                                 // bundle.putStringArray("cmd",command);
@@ -320,7 +322,8 @@ public class ShowMusicActivity extends AppCompatActivity {
                 @Override
                 public void onSuccess(String message) {
                     // while(true)
-                    System.out.println(message);
+                    //System.out.println(message);
+                    saveToStories(songName,artistName,s);
                     Toast.makeText(ShowMusicActivity.this,"Trimmed", Toast.LENGTH_LONG).show();
                 }
 
