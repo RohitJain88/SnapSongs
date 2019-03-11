@@ -1,10 +1,9 @@
-package com.example.snapchat;
+package com.example.snapchat.loginRegistration;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.PersistableBundle;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
+import com.example.snapchat.MainActivity;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class SplashScreenActivity extends AppCompatActivity {

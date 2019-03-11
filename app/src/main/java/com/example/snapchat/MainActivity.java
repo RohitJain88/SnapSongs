@@ -4,7 +4,6 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.media.MediaPlayer;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -19,6 +18,9 @@ import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
+import com.example.snapchat.fragment.ChatFragment;
+import com.example.snapchat.fragment.MusicFragment;
+import com.example.snapchat.fragment.StoryFragment;
 import com.example.snapchat.view.SnapTabsView;
 
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package com.example.snapchat;
+package com.example.snapchat.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -14,11 +14,13 @@ import android.widget.Button;
 
 import com.example.snapchat.RecyclerViewStory.StoryAdapter;
 import com.example.snapchat.RecyclerViewStory.StoryObject;
+import com.example.snapchat.UserInformation;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.example.snapchat.*;
 
 import java.util.ArrayList;
 
@@ -73,7 +75,7 @@ public class StoryFragment extends Fragment {
     }
 
     private void listenForData() {
-        for (int i =0; i < UserInformation.listFollowing.size(); i++){
+        for (int i = 0; i < UserInformation.listFollowing.size(); i++){
             DatabaseReference followingStoryDb = FirebaseDatabase.getInstance().getReference().child("users").child(UserInformation.listFollowing.get(i));
 
             followingStoryDb.addValueEventListener(new ValueEventListener() {

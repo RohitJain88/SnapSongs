@@ -1,35 +1,25 @@
-package com.example.snapchat;
+package com.example.snapchat.fragment;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.hardware.Camera;
 import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
-import android.text.Html;
-import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.SurfaceHolder;
-import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ListAdapter;
-import android.widget.ListView;
-import android.widget.PopupMenu;
-import android.widget.Toast;
 
+import com.example.snapchat.FindUsersActivity;
+import com.example.snapchat.ShowMusicActivity;
+import com.example.snapchat.loginRegistration.SplashScreenActivity;
 import com.google.firebase.auth.FirebaseAuth;
 
-import java.io.IOException;
-import java.util.ArrayList;
+import com.example.snapchat.*;
+
 import java.util.List;
 
 public class MusicFragment extends Fragment {
