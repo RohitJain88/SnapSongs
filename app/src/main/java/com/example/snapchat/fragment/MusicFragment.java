@@ -18,8 +18,6 @@ import com.example.snapchat.ShowMusicActivity;
 import com.example.snapchat.loginRegistration.SplashScreenActivity;
 import com.google.firebase.auth.FirebaseAuth;
 
-import com.example.snapchat.*;
-
 import java.util.List;
 
 public class MusicFragment extends Fragment {

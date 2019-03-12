@@ -25,6 +25,8 @@ import com.google.firebase.database.Query;
 import com.example.snapchat.*;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 public class ChatFragment extends Fragment {
     private RecyclerView mRecyclerView;
@@ -34,6 +36,8 @@ public class ChatFragment extends Fragment {
     EditText mInput;
     private FirebaseAuth auth;
     private static final String TAG = "FindUserActivity";
+    private Set<FollowObject> finalResults= new HashSet<>();;
+    private ArrayList<FollowObject> finalResultslist= new ArrayList<>();;
 
     public static ChatFragment newInstance(){
         ChatFragment fragment=new ChatFragment();
@@ -66,7 +70,8 @@ public class ChatFragment extends Fragment {
         mSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                findUser();
+                clear();
+                listenForData();
             }
         });
         return view;
@@ -88,20 +93,23 @@ public class ChatFragment extends Fragment {
                 //Gives uid of each users returned to us
                 String uid = dataSnapshot.getRef().getKey();
                 System.out.println("Uid is:"+uid);
-                Log.d(TAG, "onChildAdded Uid: "+uid);
+//                Log.d(TAG, "onChildAdded Uid: "+uid);
                 // A precautionary check as query will always return childs with email
                 if(dataSnapshot.child("email").getValue() !=null){
                     email = dataSnapshot.child("email").getValue().toString();
-                    Log.d(TAG, "onChildAdded email: "+email);
+                    //Log.d(TAG, "onChildAdded email: "+email);
                 }
 
-                Log.d(TAG, "onChildAdded id: "+auth.getUid());
+//                Log.d(TAG, "onChildAdded id: "+auth.getUid());
                 if(!email.equals(auth.getCurrentUser().getEmail())){
                     FollowObject obj = new FollowObject(email,uid);
                     results.add(obj);
                     mAdapter.notifyDataSetChanged();
+
                 }
             }
+
+
 
             @Override
             public void onChildChanged(@NonNull DataSnapshot dataSnapshot, String s) {
@@ -135,8 +143,12 @@ public class ChatFragment extends Fragment {
 
     //Will return all the users in the recycler view
     private ArrayList<FollowObject> results = new ArrayList<>();
+
     //In the beginning of the search load up every single data
     private ArrayList<FollowObject> getDataSet() {
+        if(results.size()!=0){
+            clear();
+        }
         listenForData();
         return results;
     }
