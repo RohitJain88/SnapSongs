@@ -21,7 +21,6 @@
         <activity android:name=".loginRegistration.LoginActivity" />
         <activity android:name=".loginRegistration.ChooseLoginRegistrationActivity" />
         <activity android:name=".DisplaySongActivity"/>
-        <activity android:name=".FindUsersActivity"></activity>
 
         <activity android:name=".loginRegistration.SplashScreenActivity">
             <intent-filter>

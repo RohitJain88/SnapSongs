@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 
-import com.example.snapchat.FindUsersActivity;
+import com.example.snapchat.R;
 import com.example.snapchat.ShowMusicActivity;
 import com.example.snapchat.loginRegistration.SplashScreenActivity;
 import com.google.firebase.auth.FirebaseAuth;
@@ -83,22 +83,22 @@ public class MusicFragment extends Fragment {
                 Logout();
             }
         });
-        Button mFindUsers = view.findViewById(R.id.findUsers);
-        mFindUsers.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FindUsers();
-            }
-        });
+        //Button mFindUsers = view.findViewById(R.id.findUsers);
+        //mFindUsers.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                FindUsers();
+//            }
+//        });
         return view;
     }
 
-    private void FindUsers() {
-        Intent intent = new Intent(getContext(), FindUsersActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
-        return;
-    }
+//    private void FindUsers() {
+//        Intent intent = new Intent(getContext(), FindUsersActivity.class);
+//        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//        startActivity(intent);
+//        return;
+//    }
 
     private void CheckPermission(){
 
