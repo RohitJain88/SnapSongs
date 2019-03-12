@@ -15,11 +15,6 @@
 
     </android.support.v7.widget.RecyclerView>
 
-    <SeekBar
-        android:id="@+id/seekBar"
-        android:layout_weight="0"
-        style="@style/Base.Widget.AppCompat.SeekBar.Discrete"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+
 
 </LinearLayout>

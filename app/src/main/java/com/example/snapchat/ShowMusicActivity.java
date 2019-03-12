@@ -56,7 +56,7 @@ public class ShowMusicActivity extends AppCompatActivity {
 
     private ArrayList<SongInfo> _songs=new ArrayList<>();
     RecyclerView recyclerView;
-    SeekBar seekBar;
+    //SeekBar seekBar;
     SongAdapter songAdapter;
     MediaPlayer mediaPlayer;
     Button prev;
@@ -97,7 +97,7 @@ public class ShowMusicActivity extends AppCompatActivity {
         }
         //loadFFMpegBinary();
         recyclerView= (RecyclerView)findViewById(R.id.recyclerView);
-        seekBar= (SeekBar)findViewById(R.id.seekBar);
+        //seekBar= (SeekBar)findViewById(R.id.seekBar);
         mediaPlayer =new MediaPlayer();
 
         // SongInfo s=new SongInfo("Cheap Thrills","Sia","https://open.spotify.com/album/1ZMYMTP0S4hp9AlGkAWWjt");
@@ -187,8 +187,8 @@ public class ShowMusicActivity extends AppCompatActivity {
                                     @Override
                                     public void onPrepared(MediaPlayer mp) {
                                         mp.start();
-                                        seekBar.setProgress(0);
-                                        seekBar.setMax(mp.getDuration());
+                                       // seekBar.setProgress(0);
+                                       // seekBar.setMax(mp.getDuration());
 
                                     }
                                 });
@@ -207,8 +207,8 @@ public class ShowMusicActivity extends AppCompatActivity {
                                     @Override
                                     public void onPrepared(MediaPlayer mp) {
                                         mp.start();
-                                        seekBar.setProgress(0);
-                                        seekBar.setMax(mp.getDuration());
+                                      //  seekBar.setProgress(0);
+                                     //   seekBar.setMax(mp.getDuration());
                                     }
                                 });
                                 prev=b;
@@ -400,6 +400,15 @@ public class ShowMusicActivity extends AppCompatActivity {
             // do nothing for now
         }
     }*/
+ public void onBackPressed(){
+     if(mediaPlayer!=null){
+        // flag=true;
+         mediaPlayer.stop();
+
+     }
+     super.onBackPressed();
+     this.finish();
+ }
 
     public class MyThread extends Thread{
         @Override
@@ -407,7 +416,7 @@ public class ShowMusicActivity extends AppCompatActivity {
             try {
                 Thread.sleep(1000);
                 if(mediaPlayer!=null){
-                    seekBar.setProgress(mediaPlayer.getCurrentPosition());
+                  //  seekBar.setProgress(mediaPlayer.getCurrentPosition());
                 }
             }catch (InterruptedException e){
                 e.printStackTrace();
