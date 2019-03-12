@@ -21,6 +21,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.snapchat.RecyclerViewStory.StoryObject;
 import com.example.snapchat.fragment.ChatFragment;
@@ -91,27 +92,34 @@ public class MainActivity extends AppCompatActivity {
         if(arrayList!=null){
                                               mCenterImage.setOnClickListener(new View.OnClickListener() {
                                                   @Override
+
                                                   public void onClick(View v) {
-                                                      if (viewPager.getCurrentItem() != 1)
-                                                          viewPager.setCurrentItem(1);
-                                                      else {
-                                                          Bundle bundle = new Bundle();
+                                                      try {
+                                                          if (viewPager.getCurrentItem() != 1)
+                                                              viewPager.setCurrentItem(1);
+                                                          else {
+                                                              Bundle bundle = new Bundle();
 
-                                                          Intent intent = new Intent(MainActivity.this, FleetingStory.class);
-                                                          ArrayList<String> al = new ArrayList<>();
-                                                          al.add(arrayList.get(0));
-                                                          al.add(arrayList.get(1));
-                                                          al.add(arrayList.get(2));
-                                                          //al.add("main");
-                                                          bundle.putStringArrayList("fleet", al);
-                                                          intent.putExtras(bundle);
+                                                              Intent intent = new Intent(MainActivity.this, FleetingStory.class);
+                                                              ArrayList<String> al = new ArrayList<>();
+                                                              al.add(arrayList.get(0));
+                                                              al.add(arrayList.get(1));
+                                                              al.add(arrayList.get(2));
+                                                              //al.add("main");
+                                                              bundle.putStringArrayList("fleet", al);
+                                                              intent.putExtras(bundle);
 
 
-                                                          startActivity(intent);
+                                                              startActivity(intent);
+                                                          }
+                                                      }
+                                                      catch (Exception e) {
+                                                          Toast.makeText(MainActivity.this, "Please Share a Song", Toast.LENGTH_LONG).show();
                                                       }
 
                                                   }
                                               });
+
 
         }
 //        if(p!=null){
