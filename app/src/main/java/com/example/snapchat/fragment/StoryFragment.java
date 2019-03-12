@@ -11,6 +11,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.example.snapchat.RecyclerViewStory.StoryAdapter;
 import com.example.snapchat.RecyclerViewStory.StoryObject;
@@ -48,6 +50,9 @@ public class StoryFragment extends Fragment {
         mAdapter = new StoryAdapter(getDataSet(), getContext());
         mRecyclerView.setAdapter(mAdapter);
         mRefresh = view.findViewById(R.id.Refresh);
+        //ImageView imageView=(ImageView)view.findViewById(R.id.imageView);
+        //LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(20, 20);
+        //imageView.setLayoutParams(params);
         mRefresh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
