@@ -31,7 +31,7 @@ public class StoryFragment extends Fragment {
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private static final String TAG = "StoryFragmentt";
-    Button mRefresh;
+    ImageView mRefresh;
 
     public static StoryFragment newInstance(){
         StoryFragment fragment = new StoryFragment();

@@ -9,12 +9,22 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-    <Button
+    <!--<Button-->
 
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="refresh"
-        android:id="@+id/Refresh"/>
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="refresh"-->
+        <!--android:id="@+id/Refresh"/>-->
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/updates"
+                android:layout_gravity="right"
+                android:id="@+id/Refresh"/>
+
+
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_weight="1"

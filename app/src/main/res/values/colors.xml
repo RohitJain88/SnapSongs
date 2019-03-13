@@ -133,7 +133,7 @@
     <color name="lightseagreen">#20B2AA</color>
     <color name="dodgerblue">#1E90FF</color>
     <color name="midnightblue">#191970</color>
-    <color name="aqua">#00FFFF</color>
+    <!--<color name="aqua">#00FFFF</color>-->
     <color name="cyan">#00FFFF</color>
     <color name="springgreen">#00FF7F</color>
     <color name="lime">#00FF00</color>

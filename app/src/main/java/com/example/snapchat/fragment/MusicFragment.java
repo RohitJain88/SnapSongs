@@ -4,30 +4,41 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.snapchat.R;
 import com.example.snapchat.ShowMusicActivity;
 import com.example.snapchat.loginRegistration.SplashScreenActivity;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.List;
 
+
 public class MusicFragment extends Fragment {
+    private static final String TAG = "MusicFragment";
+    private String userName;
 
     public static MusicFragment newInstance(){
         MusicFragment fragment = new MusicFragment();
         return fragment;
     }
 
-   // ListView listView;
+    // ListView listView;
     List<String> list;
     String str;
    // ListAdapter listAdapter;
@@ -56,6 +67,7 @@ public class MusicFragment extends Fragment {
     //    v.setMovementMethod(LinkMovementMethod.getInstance());
         ImageView mPost = view.findViewById(R.id.post);
         ImageView mlogout = view.findViewById(R.id.logout);
+        final TextView mtext = view.findViewById(R.id.userName);
         //Button mPost = view.findViewById(R.id.post);
 //        Button mCapture= view.findViewById(R.id.capture);
 
@@ -81,6 +93,22 @@ public class MusicFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Logout();
+            }
+        });
+        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        DatabaseReference userDb = FirebaseDatabase.getInstance().getReference("users").child(userId).child("name");
+
+        userDb.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Log.d(TAG, "Name: " + dataSnapshot.getValue().toString());
+                userName = dataSnapshot.getValue().toString();
+                mtext.setText(userName);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
             }
         });
         //Button mFindUsers = view.findViewById(R.id.findUsers);
