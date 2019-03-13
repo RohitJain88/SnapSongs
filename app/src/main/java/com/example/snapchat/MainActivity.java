@@ -89,6 +89,7 @@ public class MainActivity extends AppCompatActivity {
         final ImageView mCenterImage=(ImageView)findViewById(R.id.vst_center_image);
         viewPager.setCurrentItem(1);
         Log.d(TAG, "onCreate: "+arrayList);
+
         if(arrayList!=null){
                                               mCenterImage.setOnClickListener(new View.OnClickListener() {
                                                   @Override

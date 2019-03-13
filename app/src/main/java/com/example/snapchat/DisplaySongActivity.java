@@ -1,15 +1,19 @@
 package com.example.snapchat;
 
+import android.app.FragmentManager;
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.snapchat.fragment.StoryFragment;
 import com.google.firebase.database.DataSnapshot;
@@ -61,6 +65,7 @@ public class DisplaySongActivity extends AppCompatActivity {
                     String songName="";
                     long timestampBeg = 0;
                     long timestampEnd = 0;
+                    onRestart();
                     for (DataSnapshot storySnapchot : dataSnapshot.child("story").getChildren()){
                         if(storySnapchot.child("timestampBeg").getValue() != null){
                             timestampBeg = Long.parseLong(storySnapchot.child("timestampBeg").getValue().toString());
@@ -113,7 +118,8 @@ public class DisplaySongActivity extends AppCompatActivity {
                                 public void run() {
                                     if(!flag) {
                                         // if(arrayList.get(3).equals("main")){
-                                        Intent i = new Intent(DisplaySongActivity.this, StoryFragment.class);
+                                       // Toast.makeText("new",this);
+                                        Intent i = new Intent(DisplaySongActivity.this, MainActivity.class);
 //                                        Bundle bundle = new Bundle();
 //                                        //Intent intent= new Intent(FleetingStory.this, MainActivity.class);
 //                                        ArrayList<String> al = new ArrayList<>();
@@ -122,7 +128,14 @@ public class DisplaySongActivity extends AppCompatActivity {
 //                                        al.add(arrayList.get(2));//Trimmed Song
 //                                        bundle.putStringArrayList("info", al);
 //                                        i.putExtras(bundle);
-                                        startActivity(i);//}
+                                        startActivity(i);
+//                                        Fragment fragment = StoryFragment.newInstance();
+//
+//                                        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+//
+//                                        transaction.replace(R.id.story_fragment, fragment).commit();
+                                        //
+                                        // }
                   /*  else{
                         Intent i = new Intent(FleetingStory.this, DisplaySongActivity.class);
                         Bundle bundle = new Bundle();
@@ -135,7 +148,7 @@ public class DisplaySongActivity extends AppCompatActivity {
                         i.putExtras(bundle);
                         startActivity(i);
                     }*/
-                                        finish();
+                                     //   finish();
                                     }
                                 }
                             }, TIME_OUT);
@@ -166,7 +179,7 @@ public class DisplaySongActivity extends AppCompatActivity {
 
         }
         super.onBackPressed();
-         this.finish();
+         //this.finish();
     }
 
 //    private int imageIterator=0;
