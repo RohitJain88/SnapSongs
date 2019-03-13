@@ -1,17 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/gray">
 
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray">
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/music_guitar"
+        android:scaleType="fitXY"
+        />
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal">
+
     <Button
-        android:layout_weight="1"
-        android:layout_width="0dp"
+
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Logout"
         android:id="@+id/logout"/>
@@ -27,14 +34,9 @@
         android:layout_centerHorizontal="true"
         android:id="@+id/post"
         />
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="300dp"
-        android:layout_centerHorizontal="true"
-        android:orientation="vertical">
 
-    </LinearLayout>
+
+
 
 
 </RelativeLayout>
