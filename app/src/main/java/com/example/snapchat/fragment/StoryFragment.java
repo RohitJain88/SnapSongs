@@ -88,7 +88,7 @@ public class StoryFragment extends Fragment {
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     //Getting Information from database and checking if the timestamp lies in between the 24 hours timestamp for the story
                     Log.d(TAG, "listenForData: "+dataSnapshot);
-                    String email = dataSnapshot.child("email").getValue().toString();
+                    String email = dataSnapshot.child("name").getValue().toString();
                     String uid = dataSnapshot.getRef().getKey();
                     long timestampBeg = 0;
                     long timestampEnd = 0;
