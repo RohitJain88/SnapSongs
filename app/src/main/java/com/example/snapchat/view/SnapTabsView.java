@@ -30,6 +30,7 @@ public class SnapTabsView extends FrameLayout implements ViewPager.OnPageChangeL
     private ImageView mStartImage;
     private ImageView mEndImage;
     private ImageView mBottomImage;
+    private ImageView mNotes;
     private View mIndicator;
     private ArgbEvaluator mArgbEvaluator;
     private int mCenterColor;
@@ -81,10 +82,11 @@ public class SnapTabsView extends FrameLayout implements ViewPager.OnPageChangeL
         mEndImage=(ImageView)findViewById(R.id.vst_end_image);
         mBottomImage=(ImageView)findViewById(R.id.vst_bottom_image);
         mIndicator=findViewById(R.id.vst_indicator);
+        mNotes=(ImageView)findViewById(R.id.notes);
         mArgbEvaluator=new ArgbEvaluator();
 
-        mCenterColor= ContextCompat.getColor(getContext(),R.color.white);
-        mSideColor=ContextCompat.getColor(getContext(),R.color.darkgray);
+
+        mSideColor=ContextCompat.getColor(getContext(),R.color.whitesmoke);
 
         mIndicatorTranslationX= (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,80,getResources().getDisplayMetrics());
 
@@ -137,10 +139,13 @@ public class SnapTabsView extends FrameLayout implements ViewPager.OnPageChangeL
         float scale=.7f+((1-fractionFromCenter)*.3f);
 
     mCenterImage.setScaleX(scale);
+        mNotes.setScaleX(scale);
     mCenterImage.setScaleY(scale);
+        mNotes.setScaleY(scale);
     int translation= (int) (fractionFromCenter*mCenterTranslationY);
 
     mCenterImage.setTranslationY(translation);
+    mNotes.setTranslationY(translation);
     mBottomImage.setTranslationY(translation);
     mBottomImage.setAlpha(1-fractionFromCenter);
     }

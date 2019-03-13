@@ -13,6 +13,8 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toolbar;
 
+import com.example.snapchat.fragment.StoryFragment;
+
 import java.util.ArrayList;
 
 public class FleetingStory extends AppCompatActivity {
@@ -32,7 +34,7 @@ public class FleetingStory extends AppCompatActivity {
         frameLayout = (FrameLayout) findViewById(R.id.myFrameLay);
         animationDrawable = (AnimationDrawable) frameLayout.getBackground();
         Bundle p = getIntent().getExtras();
-
+    onRestart();
 
         if(p!=null)
             arrayList =p.getStringArrayList("fleet");
@@ -65,17 +67,18 @@ public class FleetingStory extends AppCompatActivity {
             @Override
             public void run() {
                 if(!flag) {
-                   // if(arrayList.get(3).equals("main")){
-                    Intent i = new Intent(FleetingStory.this, MainActivity.class);
+                    if(arrayList.get(3).equals("main")){
+                   // Intent i = new Intent(FleetingStory.this, StoryFragment.class);
                     Bundle bundle = new Bundle();
-                    //Intent intent= new Intent(FleetingStory.this, MainActivity.class);
-                    ArrayList<String> al = new ArrayList<>();
+                    Intent intent= new Intent(FleetingStory.this, MainActivity.class);
+                   final ArrayList<String> al = new ArrayList<>();
                     al.add(arrayList.get(0));//Song Name
                     al.add(arrayList.get(1));//Artist Name
                     al.add(arrayList.get(2));//Trimmed Song
                     bundle.putStringArrayList("info", al);
-                    i.putExtras(bundle);
-                    startActivity(i);//}
+                    intent.putExtras(bundle);
+                    startActivity(intent);}
+                    onDestroy();
                   /*  else{
                         Intent i = new Intent(FleetingStory.this, DisplaySongActivity.class);
                         Bundle bundle = new Bundle();

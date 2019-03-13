@@ -9,15 +9,25 @@
 
 
     <ImageView
-        android:id="@+id/vst_center_image"
-        android:layout_width="88dp"
-        android:layout_height="88dp"
-        android:layout_gravity="center|bottom"
-        android:src="@drawable/large_circle"
+    android:id="@+id/vst_center_image"
+    android:layout_width="88dp"
+    android:layout_height="88dp"
+    android:layout_gravity="center|bottom"
+    android:src="@drawable/large_circle"
+    android:layout_marginBottom="96dp"
 
-        android:layout_marginBottom="96dp"
+    />
+    <ImageView
+        android:id="@+id/notes"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_gravity="center|bottom"
+        android:src="@drawable/notes"
+        android:layout_marginBottom="100dp"
 
         />
+
+
     <ImageView
         android:id="@+id/vst_start_image"
         android:layout_width="32dp"
