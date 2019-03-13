@@ -4,7 +4,7 @@
     android:orientation="vertical"
     xmlns:android="http://schemas.android.com/apk/res/android">
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:background="?android:attr/selectableItemBackground"
         android:padding="10sp"
@@ -22,7 +22,7 @@
             android:id="@+id/email"
             android:translationX="10dp"
             android:layout_weight="1"
-            android:layout_width="match_parent"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="Large Text"
             android:textSize="17dp"
