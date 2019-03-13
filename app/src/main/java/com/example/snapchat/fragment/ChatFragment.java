@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import com.example.snapchat.RecyclerViewFollow.FollowAdapter;
 import com.example.snapchat.RecyclerViewFollow.FollowObject;
@@ -56,7 +57,7 @@ public class ChatFragment extends Fragment {
 
         View view =inflater.inflate(R.layout.fragment_chat,container,false);
         mInput = view.findViewById(R.id.input);
-        Button mSearch = view.findViewById(R.id.search);
+        ImageView mSearch = view.findViewById(R.id.search);
         auth = FirebaseAuth.getInstance();
 
         mRecyclerView = view.findViewById(R.id.recyclerView);

@@ -33,26 +33,27 @@ public class FollowAdapter extends RecyclerView.Adapter<FollowViewHolders> {
 
     @Override
     public void onBindViewHolder(final FollowViewHolders holder, int position) {
+        //int id = getResources().getIdentifier("yourpackagename:drawable/" + StringGenerated, null, null);
         holder.mEmail.setText(usersList.get(position).getEmail());
         //Changing the button text according to logged-in user following's
         if(UserInformation.listFollowing.contains(usersList.get(holder.getLayoutPosition()).getUid())){
-            holder.mFollow.setText("following");
+            holder.mFollow.setImageResource(R.drawable.ic_check_box_black);
         }else{
-            holder.mFollow.setText("follow");
+            holder.mFollow.setImageResource(R.drawable.ic_person_add_black);
         }
 
         holder.mFollow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                Log.d(TAG, "onClick: "+userId);
+                //Log.d(TAG, "onClick: "+userId);
                 if(!UserInformation.listFollowing.contains(usersList.get(holder.getLayoutPosition()).getUid())){
-                    holder.mFollow.setText("following");
+                    holder.mFollow.setImageResource(R.drawable.ic_check_box_black);
                     Log.d(TAG, "I m following");
                     FirebaseDatabase.getInstance().getReference().child("users").child(userId).child("following").child(usersList.get(holder.getLayoutPosition()).getUid()).setValue(true);
                 }
                 else{
-                    holder.mFollow.setText("follow");
+                    holder.mFollow.setImageResource(R.drawable.ic_person_add_black);
                     Log.d(TAG, "Follow");
                     FirebaseDatabase.getInstance().getReference().child("users").child(userId).child("following").child(usersList.get(holder.getLayoutPosition()).getUid()).removeValue();
                 }

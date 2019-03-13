@@ -55,7 +55,7 @@ public class MusicFragment extends Fragment {
      //   v.setText(Html.fromHtml(v.getText().toString()));
     //    v.setMovementMethod(LinkMovementMethod.getInstance());
         ImageView mPost = view.findViewById(R.id.post);
-        Button mlogout = view.findViewById(R.id.logout);
+        ImageView mlogout = view.findViewById(R.id.logout);
         //Button mPost = view.findViewById(R.id.post);
 //        Button mCapture= view.findViewById(R.id.capture);
 
