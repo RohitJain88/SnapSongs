@@ -24,6 +24,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 
 import com.example.snapchat.*;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -38,7 +39,8 @@ public class ChatFragment extends Fragment {
     private FirebaseAuth auth;
     private static final String TAG = "FindUserActivity";
     private Set<FollowObject> finalResults= new HashSet<>();;
-    private ArrayList<FollowObject> finalResultslist= new ArrayList<>();;
+    private ArrayList<FollowObject> finalResultslist= new ArrayList<>();
+    String userName;
 
     public static ChatFragment newInstance(){
         ChatFragment fragment=new ChatFragment();
@@ -85,25 +87,45 @@ public class ChatFragment extends Fragment {
 
     //This method is used to search emails based on the entered text
     private void listenForData() {
-        DatabaseReference userDb = FirebaseDatabase.getInstance().getReference().child("users");
-        Query query = userDb.orderByChild("email").startAt(mInput.getText().toString()).endAt(mInput.getText().toString() + "\uf8ff");
+        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        DatabaseReference userDb = FirebaseDatabase.getInstance().getReference("users").child(userId).child("name");
+
+        userDb.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Log.d(TAG, "Name: " + dataSnapshot.getValue().toString());
+                userName = dataSnapshot.getValue().toString();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+        DatabaseReference emailDb = FirebaseDatabase.getInstance().getReference().child("users");
+        Query query = emailDb.orderByChild("email").startAt(mInput.getText().toString()).endAt(mInput.getText().toString() + "\uf8ff");
         query.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, String s) {
                 String email ="";
+                String user ="";
                 //Gives uid of each users returned to us
+
                 String uid = dataSnapshot.getRef().getKey();
                 System.out.println("Uid is:"+uid);
 //                Log.d(TAG, "onChildAdded Uid: "+uid);
                 // A precautionary check as query will always return childs with email
                 if(dataSnapshot.child("email").getValue() !=null){
                     email = dataSnapshot.child("email").getValue().toString();
+                    user = dataSnapshot.child("name").getValue().toString();
                     //Log.d(TAG, "onChildAdded email: "+email);
                 }
 
-//                Log.d(TAG, "onChildAdded id: "+auth.getUid());
-                if(!email.equals(auth.getCurrentUser().getEmail())){
-                    FollowObject obj = new FollowObject(email,uid);
+                //Log.d(TAG, "NAME: "+FirebaseDatabase.getInstance().getReference().child("users").child(userId).child("name").);
+                //Log.d(TAG, "Name: "+userName);
+
+                if(!user.equals(userName)){
+                    FollowObject obj = new FollowObject(user,uid);
                     results.add(obj);
                     mAdapter.notifyDataSetChanged();
 
