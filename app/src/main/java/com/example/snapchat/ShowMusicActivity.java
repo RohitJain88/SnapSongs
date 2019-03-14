@@ -151,8 +151,8 @@ public class ShowMusicActivity extends AppCompatActivity {
                                }else {*/
 //
 //                                //Log.v("seconds", seconds);
-//                                String minutes = String.valueOf(dur / 60000);
-
+                               String minutes = String.valueOf(dur / 60000);
+                                int min=Integer.parseInt(minutes);
                                    al.add(obj.songName);
                                    al.add(obj.artistName);
 
@@ -160,8 +160,13 @@ public class ShowMusicActivity extends AppCompatActivity {
                                     songName=obj.songName;
                                     artistName=obj.artistName;
                                    al.add(s);
-                                   String[] command = {"-y", "-i", obj.songUrl, "-ss", "00:15", "-to", "00:30", "-c", "copy", s};
-                                   execute(command);
+
+                                   if(min==0 && sec<=30){
+                                       String[] command = {"-y", "-i", obj.songUrl, "-ss", "00:00", "-to",minutes+":"+seconds, "-c", "copy", s};
+                                       execute(command);
+                                   }else{
+                                String[] command = {"-y", "-i", obj.songUrl, "-ss", "00:15", "-to", "00:30", "-c", "copy", s};
+                                   execute(command);}
 //                                   new Handler().postDelayed(new Runnable() {
 //                                       @Override
 //                                       public void run() {

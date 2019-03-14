@@ -34,7 +34,7 @@ public class FleetingStory extends AppCompatActivity {
         frameLayout = (FrameLayout) findViewById(R.id.myFrameLay);
         animationDrawable = (AnimationDrawable) frameLayout.getBackground();
         Bundle p = getIntent().getExtras();
-    onRestart();
+    //onRestart();
 
         if(p!=null)
             arrayList =p.getStringArrayList("fleet");
@@ -67,7 +67,7 @@ public class FleetingStory extends AppCompatActivity {
             @Override
             public void run() {
                 if(!flag) {
-                    if(arrayList.get(3).equals("main")){
+                  //  if(arrayList.get(3).equals("main")){
                    // Intent i = new Intent(FleetingStory.this, StoryFragment.class);
                     Bundle bundle = new Bundle();
                     Intent intent= new Intent(FleetingStory.this, MainActivity.class);
@@ -77,8 +77,8 @@ public class FleetingStory extends AppCompatActivity {
                     al.add(arrayList.get(2));//Trimmed Song
                     bundle.putStringArrayList("info", al);
                     intent.putExtras(bundle);
-                    startActivity(intent);}
-                    onDestroy();
+                    startActivity(intent);//}
+                  //  onDestroy();
                   /*  else{
                         Intent i = new Intent(FleetingStory.this, DisplaySongActivity.class);
                         Bundle bundle = new Bundle();
