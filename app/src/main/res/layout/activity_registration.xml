@@ -34,6 +34,7 @@
         android:background="#6ef4f4f4"
         android:drawablePadding="30dp"
         android:textColorHint="#fff"
+        android:drawableLeft="@drawable/ic_person_white_24dp"
         android:id="@+id/email"
 
       />

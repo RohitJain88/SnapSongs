@@ -1,15 +1,19 @@
 package com.example.snapchat;
 
+import android.app.FragmentManager;
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.snapchat.fragment.StoryFragment;
 import com.google.firebase.database.DataSnapshot;
@@ -61,6 +65,7 @@ public class DisplaySongActivity extends AppCompatActivity {
                     String songName="";
                     long timestampBeg = 0;
                     long timestampEnd = 0;
+                    onRestart();
                     for (DataSnapshot storySnapchot : dataSnapshot.child("story").getChildren()){
                         if(storySnapchot.child("timestampBeg").getValue() != null){
                             timestampBeg = Long.parseLong(storySnapchot.child("timestampBeg").getValue().toString());
@@ -100,7 +105,7 @@ public class DisplaySongActivity extends AppCompatActivity {
 
                                 mediaPlayer = new MediaPlayer();
                                 mediaPlayer.setDataSource(songUrl);
-                                mediaPlayer.prepareAsync();
+                                mediaPlayer.prepare();
                                 mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
                                     @Override
                                     public void onPrepared(MediaPlayer mp) {
@@ -112,38 +117,11 @@ public class DisplaySongActivity extends AppCompatActivity {
                                 @Override
                                 public void run() {
                                     if(!flag) {
-                                        // if(arrayList.get(3).equals("main")){
-                                        Intent i = new Intent(DisplaySongActivity.this, StoryFragment.class);
-//                                        Bundle bundle = new Bundle();
-//                                        //Intent intent= new Intent(FleetingStory.this, MainActivity.class);
-//                                        ArrayList<String> al = new ArrayList<>();
-//                                        al.add(arrayList.get(0));//Song Name
-//                                        al.add(arrayList.get(1));//Artist Name
-//                                        al.add(arrayList.get(2));//Trimmed Song
-//                                        bundle.putStringArrayList("info", al);
-//                                        i.putExtras(bundle);
-                                        startActivity(i);//}
-                  /*  else{
-                        Intent i = new Intent(FleetingStory.this, DisplaySongActivity.class);
-                        Bundle bundle = new Bundle();
-                        //Intent intent= new Intent(FleetingStory.this, MainActivity.class);
-                        ArrayList<String> al = new ArrayList<>();
-                        al.add(arrayList.get(0));//Song Name
-                        al.add(arrayList.get(1));//Artist Name
-                        al.add(arrayList.get(2));//Trimmed Song
-                        bundle.putStringArrayList("info", al);
-                        i.putExtras(bundle);
-                        startActivity(i);
-                    }*/
-                                        finish();
+                                        Intent i = new Intent(DisplaySongActivity.this, MainActivity.class);
+                                        startActivity(i);
                                     }
                                 }
                             }, TIME_OUT);
-                            //showStory(bundle);
-//                            if(!started){
-//                                started = true;
-//                                initializeDisplay();
-//                            }
                         }
                     }
                 }
@@ -166,47 +144,5 @@ public class DisplaySongActivity extends AppCompatActivity {
 
         }
         super.onBackPressed();
-         this.finish();
     }
-
-//    private int imageIterator=0;
-//    private void initializeDisplay() {
-//        //glide: library to get images efficiently, w/o hussle by giving image url
-//        Glide.with(getApplication()).load(imageUrlList.get(imageIterator)).into(mImage);
-//
-//        mImage.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                changeImage();
-//            }
-//        });
-//        final Handler handler = new Handler();
-//        //Defining the delay between the image view for 5 secs
-//        final int delay = 5000;
-//
-//        //Use to view multiple images in the story untill all images ran out and activity kills itself
-//        handler.postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-//               changeImage();
-//               handler.postDelayed(this, delay);
-//            }
-//        },delay);
-//    }
-//
-//
-//    private void changeImage() {
-//        //Check for any remaining image and return to prev activity if not found
-//        if(imageIterator == imageUrlList.size() - 1)//as imageIterator starts with 0 and not 1
-//        {
-//            finish();
-//            return;
-//        }
-//        imageIterator++;
-//        Glide.with(getApplication()).load(imageUrlList.get(imageIterator)).into(mImage);
-//    }
-//
-//    //Timer to change the image for the specified time
-
-
 }

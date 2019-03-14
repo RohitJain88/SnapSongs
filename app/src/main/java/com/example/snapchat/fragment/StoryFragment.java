@@ -31,7 +31,7 @@ public class StoryFragment extends Fragment {
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private static final String TAG = "StoryFragmentt";
-    Button mRefresh;
+    ImageView mRefresh;
 
     public static StoryFragment newInstance(){
         StoryFragment fragment = new StoryFragment();
@@ -50,9 +50,6 @@ public class StoryFragment extends Fragment {
         mAdapter = new StoryAdapter(getDataSet(), getContext());
         mRecyclerView.setAdapter(mAdapter);
         mRefresh = view.findViewById(R.id.Refresh);
-        //ImageView imageView=(ImageView)view.findViewById(R.id.imageView);
-        //LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(20, 20);
-        //imageView.setLayoutParams(params);
         mRefresh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -81,6 +78,7 @@ public class StoryFragment extends Fragment {
 
     private void listenForData() {
         for (int i = 0; i < UserInformation.listFollowing.size(); i++){
+
             DatabaseReference followingStoryDb = FirebaseDatabase.getInstance().getReference().child("users").child(UserInformation.listFollowing.get(i));
 
             followingStoryDb.addValueEventListener(new ValueEventListener() {
@@ -88,7 +86,7 @@ public class StoryFragment extends Fragment {
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     //Getting Information from database and checking if the timestamp lies in between the 24 hours timestamp for the story
                     Log.d(TAG, "listenForData: "+dataSnapshot);
-                    String email = dataSnapshot.child("email").getValue().toString();
+                    String email = dataSnapshot.child("name").getValue().toString();
                     String uid = dataSnapshot.getRef().getKey();
                     long timestampBeg = 0;
                     long timestampEnd = 0;

@@ -7,14 +7,16 @@
     android:background="@color/mediumpurple"
     android:orientation="vertical"
     tools:context=".loginRegistration.ChooseLoginRegistrationActivity">
+
 <ImageView
-    android:layout_width="130dp"
-    android:layout_height="130dp"
+    android:layout_width="500dp"
+    android:layout_height="500dp"
     android:layout_marginTop="70dp"
-    android:src="@drawable/music_1"
+    android:src="@drawable/logo"
     android:layout_centerHorizontal="true"
 
     />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="160dp"

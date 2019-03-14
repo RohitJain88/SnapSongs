@@ -83,54 +83,48 @@ public class MainActivity extends AppCompatActivity {
         arrayList=new ArrayList<String>();
 
         arrayList=listenForData();
-//        if(p!=null)
-//         arrayList =p.getStringArrayList("info");
 
         final ImageView mCenterImage=(ImageView)findViewById(R.id.vst_center_image);
         viewPager.setCurrentItem(1);
         Log.d(TAG, "onCreate: "+arrayList);
+
         if(arrayList!=null){
-                                              mCenterImage.setOnClickListener(new View.OnClickListener() {
-                                                  @Override
+              mCenterImage.setOnClickListener(new View.OnClickListener() {
+                  @Override
 
-                                                  public void onClick(View v) {
-                                                      try {
-                                                          if (viewPager.getCurrentItem() != 1)
-                                                              viewPager.setCurrentItem(1);
-                                                          else {
-                                                              Bundle bundle = new Bundle();
+                  public void onClick(View v) {
+                      try {
+                          if (viewPager.getCurrentItem() != 1)
+                              viewPager.setCurrentItem(1);
+                          else {
+                              Bundle bundle = new Bundle();
 
-                                                              Intent intent = new Intent(MainActivity.this, FleetingStory.class);
-                                                              ArrayList<String> al = new ArrayList<>();
-                                                              al.add(arrayList.get(0));
-                                                              al.add(arrayList.get(1));
-                                                              al.add(arrayList.get(2));
-                                                              //al.add("main");
-                                                              bundle.putStringArrayList("fleet", al);
-                                                              intent.putExtras(bundle);
+                              Intent intent = new Intent(MainActivity.this, FleetingStory.class);
+                              ArrayList<String> al = new ArrayList<>();
+                              al.add(arrayList.get(0));
+                              al.add(arrayList.get(1));
+                              al.add(arrayList.get(2));
+                              //al.add("main");
+                              bundle.putStringArrayList("fleet", al);
+                              intent.putExtras(bundle);
 
 
-                                                              startActivity(intent);
-                                                          }
-                                                      }
-                                                      catch (Exception e) {
-                                                          Toast.makeText(MainActivity.this, "Please Share a Song", Toast.LENGTH_LONG).show();
-                                                      }
+                              startActivity(intent);
+                          }
+                      }
+                      catch (Exception e) {
+                          Toast.makeText(MainActivity.this, "Please Share a Song", Toast.LENGTH_LONG).show();
+                      }
 
-                                                  }
-                                              });
+                  }
+              });
 
 
         }
-//        if(p!=null){
-//        }
-
 
         final int colorBlue = ContextCompat.getColor(this, R.color.lightblue);
         final int colorPurple = ContextCompat.getColor(this, R.color.purple);
 
-        //TabLayout tabLayout=(TabLayout) findViewById(R.id.am_tab_layout);
-       // tabLayout.setupWithViewPager(viewPager);
 
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -188,17 +182,6 @@ public class MainActivity extends AppCompatActivity {
             }
             return null;
 
-/*public CharSequence getPageTitle(int position){
-            switch (position){
-                case 0:
-                    return "Chat";
-                case 1:
-                    return "Search";
-                case 2:
-                    return "Stories";
-
-            }
-            return super.getPageTitle(position);*/
         }
 
         @Override

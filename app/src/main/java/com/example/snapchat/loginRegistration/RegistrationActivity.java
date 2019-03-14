@@ -21,6 +21,7 @@ import com.example.snapchat.*;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Executor;
+import java.util.regex.Pattern;
 
 public class RegistrationActivity extends AppCompatActivity {
     private Button mRegistration;
@@ -56,9 +57,17 @@ public class RegistrationActivity extends AppCompatActivity {
                 final String name=mName.getText().toString();
                 final String email=mEmail.getText().toString();
                 final String password=mPassword.getText().toString();
+                if(email.equals("") || password.equals("") || name.equals("")){
+                    Toast.makeText(RegistrationActivity.this,"Please enter all the fields",Toast.LENGTH_SHORT).show();
+                }
+                else if(!isValid(email)){
+                    Toast.makeText(RegistrationActivity.this,"Please enter valid email address",Toast.LENGTH_SHORT).show();
+                }
+                else{
                 mAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(RegistrationActivity.this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
+
                         if (!task.isSuccessful()) {
                             Toast.makeText(getApplication(), "Sign in ERROR", Toast.LENGTH_SHORT).show();
                         }else{
@@ -73,9 +82,21 @@ public class RegistrationActivity extends AppCompatActivity {
                             Toast.makeText(getApplication(), "Registered successfully", Toast.LENGTH_SHORT).show();
                         }
                     }
-                });
+                });}
             }
         });
+    }
+    public static boolean isValid(String email)
+    {
+        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\."+
+                "[a-zA-Z0-9_+&*-]+)*@" +
+                "(?:[a-zA-Z0-9-]+\\.)+[a-z" +
+                "A-Z]{2,7}$";
+
+        Pattern pat = Pattern.compile(emailRegex);
+        if (email == null)
+            return false;
+        return pat.matcher(email).matches();
     }
     @Override
     protected void onStart() {

@@ -7,11 +7,11 @@ import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toolbar;
+
+import com.example.snapchat.fragment.StoryFragment;
 
 import java.util.ArrayList;
 
@@ -27,12 +27,9 @@ public class FleetingStory extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fleeting_story);
-        //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        //setSupportActionBar(toolbar);
         frameLayout = (FrameLayout) findViewById(R.id.myFrameLay);
         animationDrawable = (AnimationDrawable) frameLayout.getBackground();
         Bundle p = getIntent().getExtras();
-
 
         if(p!=null)
             arrayList =p.getStringArrayList("fleet");
@@ -53,7 +50,7 @@ public class FleetingStory extends AppCompatActivity {
 
             mediaPlayer = new MediaPlayer();
             mediaPlayer.setDataSource(arrayList.get(2));
-            mediaPlayer.prepareAsync();
+            mediaPlayer.prepare();
             mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
                 @Override
                 public void onPrepared(MediaPlayer mp) {
@@ -65,30 +62,15 @@ public class FleetingStory extends AppCompatActivity {
             @Override
             public void run() {
                 if(!flag) {
-                   // if(arrayList.get(3).equals("main")){
-                    Intent i = new Intent(FleetingStory.this, MainActivity.class);
                     Bundle bundle = new Bundle();
-                    //Intent intent= new Intent(FleetingStory.this, MainActivity.class);
-                    ArrayList<String> al = new ArrayList<>();
+                    Intent intent= new Intent(FleetingStory.this, MainActivity.class);
+                   final ArrayList<String> al = new ArrayList<>();
                     al.add(arrayList.get(0));//Song Name
                     al.add(arrayList.get(1));//Artist Name
                     al.add(arrayList.get(2));//Trimmed Song
                     bundle.putStringArrayList("info", al);
-                    i.putExtras(bundle);
-                    startActivity(i);//}
-                  /*  else{
-                        Intent i = new Intent(FleetingStory.this, DisplaySongActivity.class);
-                        Bundle bundle = new Bundle();
-                        //Intent intent= new Intent(FleetingStory.this, MainActivity.class);
-                        ArrayList<String> al = new ArrayList<>();
-                        al.add(arrayList.get(0));//Song Name
-                        al.add(arrayList.get(1));//Artist Name
-                        al.add(arrayList.get(2));//Trimmed Song
-                        bundle.putStringArrayList("info", al);
-                        i.putExtras(bundle);
-                        startActivity(i);
-                    }*/
-                    finish();
+                    intent.putExtras(bundle);
+                    startActivity(intent);//}
                 }
             }
         }, TIME_OUT);
@@ -98,10 +80,11 @@ public class FleetingStory extends AppCompatActivity {
         if(mediaPlayer!=null){
             flag=true;
             mediaPlayer.stop();
-
+            mediaPlayer.reset();
+            mediaPlayer.release();
+            mediaPlayer=null;
         }
         super.onBackPressed();
-       // this.finish();
     }
 
 }
