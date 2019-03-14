@@ -22,6 +22,7 @@ import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.Toast;
 
@@ -59,7 +60,7 @@ public class ShowMusicActivity extends AppCompatActivity {
     //SeekBar seekBar;
     SongAdapter songAdapter;
     MediaPlayer mediaPlayer;
-    Button prev;
+    ImageView prev;
     Handler handler=new Handler();
     FFmpeg ffmpeg;
     String s="";
@@ -68,12 +69,16 @@ public class ShowMusicActivity extends AppCompatActivity {
     StorageReference songRef;
     String Uid;
     private static int TIME_OUT=2000;
-    String TAG ="ShowMusicActiviyt";
+    String TAG ="ShowMusicActivity";
     Map<String, Object> mapToUpload;
+    int flag=1,flag1=1;
+    public ImageView Action;
+    public ImageView Share;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_music);
         ffmpeg = FFmpeg.getInstance(this);
@@ -108,21 +113,33 @@ public class ShowMusicActivity extends AppCompatActivity {
         recyclerView.addItemDecoration(dividerItemDecoration);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(songAdapter);
+         Action=(ImageView)findViewById(R.id.btnAction);
+        Share=(ImageView)findViewById(R.id.btnShare);
 
         songAdapter.setOnItemClickListener(new SongAdapter.OnItemClickListener() {
             @Override
-            public void onItemClick(final Button b, View v, final SongInfo obj, int position) {
+            public void onItemClick(final ImageView b, View v, final SongInfo obj, int position) {
+                Log.d(TAG, "onItemClick: "+b.getId());
+                Log.d(TAG, "onItemClick: "+R.id.btnAction);
+
+
                 Runnable r=new Runnable() {
                     @Override
                     public void run() {
                         try {
-                            if(b.getText().toString().equals("Stop")){
-                                b.setText("Play");
+                            if(b.getId()==R.id.btnAction && flag==0 && prev.equals(b)){
+                               // b.setText("Play");
+                                //prev.setImageResource(R.drawable.play);
+                                //Log.d(TAG, "run: "+);
+                                flag=1;
+                                b.setImageResource(R.drawable.play);
+                                //b.setTag(R.drawable.play);
                                 mediaPlayer.stop();
                                 mediaPlayer.reset();
                                 mediaPlayer.release();
+                                //prev=b;
                                 mediaPlayer=null;
-                            }else if(b.getText().toString().equals("Share")){
+                            }else if(b.getId()==R.id.btnShare){
                                 Intent intent= new Intent(ShowMusicActivity.this, MainActivity.class);
                                 Bundle bundle=new Bundle();
                                 if(mediaPlayer!= null && mediaPlayer.isPlaying()){
@@ -131,7 +148,10 @@ public class ShowMusicActivity extends AppCompatActivity {
                                     mediaPlayer.release();
                                     mediaPlayer=null;
                                     // if(!prev.getText().equals("Share"))
-                                    prev.setText("Play");
+                                    //Share.setImageResource(R.drawable.play);
+                                    //f(flag==0){
+                                    flag=1;
+                                        prev.setImageResource(R.drawable.play);//}
                                 }
                                MediaMetadataRetriever metaRetriever = new MediaMetadataRetriever();
                                metaRetriever.setDataSource(obj.songUrl);
@@ -182,7 +202,8 @@ public class ShowMusicActivity extends AppCompatActivity {
                               //  f.setArguments(bundle);
                                 startActivity(intent);
                             }
-                            else if(mediaPlayer==null || (b.getText().toString().equals("Play") && !mediaPlayer.isPlaying())) {
+                            else if(mediaPlayer==null || (b.getId()==R.id.btnAction && flag==1 && !mediaPlayer.isPlaying())) {
+                                Log.d(TAG, "iii: "+R.id.btnAction);
 
                                 // String cmd[]={"--upgrade"};
                                 mediaPlayer = new MediaPlayer();
@@ -197,10 +218,17 @@ public class ShowMusicActivity extends AppCompatActivity {
 
                                     }
                                 });
+                                flag=0;
+                                flag1=0;
                                 prev=b;
-                                b.setText("Stop");
-                            }else if(mediaPlayer!=null && b.getText().toString().equals("Play") && mediaPlayer.isPlaying()){
-                                prev.setText("Play");
+                                b.setImageResource(R.drawable.stop);
+                                prev.setTag(R.drawable.stop);
+                                //prev=b;
+                                //b.setText("Stop");
+                            }else if(mediaPlayer!=null && b.getId()==R.id.btnAction && mediaPlayer.isPlaying()){
+                                //prev.setText("Play");
+                                prev.setImageResource(R.drawable.play);
+                                //Action.setImageResource(R.drawable.play);
                                 mediaPlayer.stop();
                                 mediaPlayer.reset();
                                 mediaPlayer.release();
@@ -216,8 +244,11 @@ public class ShowMusicActivity extends AppCompatActivity {
                                      //   seekBar.setMax(mp.getDuration());
                                     }
                                 });
+                                //prev=b;
+                                flag=0;
                                 prev=b;
-                                b.setText("Stop");
+                                //b.setText("Stop");
+                                b.setImageResource(R.drawable.stop);
                             }
 
                         }catch (IOException e){}

@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -24,7 +25,7 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.SongHolder> {
     }
 
     public interface OnItemClickListener{
-        void onItemClick(Button b, View v, SongInfo obj, int position);
+        void onItemClick(ImageView b, View v, SongInfo obj, int position);
     }
 
     public void setOnItemClickListener(OnItemClickListener onItemClickListener){
@@ -69,13 +70,13 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.SongHolder> {
 
     public class SongHolder extends RecyclerView.ViewHolder {
         TextView songName, artistName;
-        Button btnAction,btnShare;
+        ImageView btnAction,btnShare;
         public SongHolder(@NonNull View itemView) {
             super(itemView);
             songName= (TextView) itemView.findViewById(R.id.SongName);
             artistName= (TextView) itemView.findViewById(R.id.ArtistName);
-            btnAction= (Button) itemView.findViewById(R.id.btnAction);
-            btnShare=(Button)itemView.findViewById(R.id.btnShare);
+            btnAction= (ImageView) itemView.findViewById(R.id.btnAction);
+            btnShare=(ImageView)itemView.findViewById(R.id.btnShare);
         }
     }
 }
