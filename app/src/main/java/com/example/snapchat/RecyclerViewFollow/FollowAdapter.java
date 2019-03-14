@@ -48,11 +48,12 @@ public class FollowAdapter extends RecyclerView.Adapter<FollowViewHolders> {
         holder.mFollow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                 userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                //Log.d(TAG, "onClick: "+userId);
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
+                 userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                //Log.d(TAG, "onClick: "+userId);
+
                         if (!UserInformation.listFollowing.contains(usersList.get(holder.getLayoutPosition()).getUid())) {
                             holder.mFollow.setImageResource(R.drawable.ic_check_box_black);
                             Log.d(TAG, "I m following");
