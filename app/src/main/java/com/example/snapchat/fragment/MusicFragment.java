@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.snapchat.R;
 import com.example.snapchat.ShowMusicActivity;
@@ -95,22 +96,28 @@ public class MusicFragment extends Fragment {
                 Logout();
             }
         });
-        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        DatabaseReference userDb = FirebaseDatabase.getInstance().getReference("users").child(userId).child("name");
+        try{
+            String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+            DatabaseReference userDb = FirebaseDatabase.getInstance().getReference("users").child(userId).child("name");
 
-        userDb.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                //Log.d(TAG, "Name: " + dataSnapshot.getValue().toString());
-                userName = dataSnapshot.getValue().toString();
-                mtext.setText(userName);
-            }
+            userDb.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    //Log.d(TAG, "Name: " + dataSnapshot.getValue().toString());
+                    userName = dataSnapshot.getValue().toString();
+                    mtext.setText(userName);
+                }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
 
-            }
-        });
+                }
+            });
+        }
+        catch(Exception e){
+            Toast.makeText(getActivity().getApplicationContext(), "User Not logged In", Toast.LENGTH_LONG).show();
+        }
+
         //Button mFindUsers = view.findViewById(R.id.findUsers);
         //mFindUsers.setOnClickListener(new View.OnClickListener() {
 //            @Override
