@@ -20,7 +20,7 @@ public class FollowAdapter extends RecyclerView.Adapter<FollowViewHolders> {
     private List<FollowObject> usersList;
     private Context context;
     private String TAG="FollowAdapter";
-    private int TIME_OUT=1500;
+    private int TIME_OUT=2000;
     public String userId;
 
     public FollowAdapter(List<FollowObject> usersList, Context context){
