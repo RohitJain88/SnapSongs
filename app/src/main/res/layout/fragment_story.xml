@@ -20,7 +20,7 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:src="@drawable/updates"
+                android:src="@drawable/reload"
                 android:layout_gravity="right"
                 android:id="@+id/Refresh"/>
 

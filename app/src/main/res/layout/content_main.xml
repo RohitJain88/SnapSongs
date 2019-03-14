@@ -26,11 +26,12 @@
             android:translationX="20dp"
             >
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="370dp"
             android:layout_height="wrap_content"
             android:translationX="0dp"
             android:hint="Song Name"
             android:id="@+id/SongText"
+
             android:textColor="@android:color/white"
             android:textSize="20sp"
             android:textStyle="bold"
@@ -38,7 +39,7 @@
 
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="370dp"
             android:layout_height="wrap_content"
 
             android:hint="Artist Name"
