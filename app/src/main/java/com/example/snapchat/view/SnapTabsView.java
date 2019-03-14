@@ -88,6 +88,7 @@ public class SnapTabsView extends FrameLayout implements ViewPager.OnPageChangeL
 
         mSideColor=ContextCompat.getColor(getContext(),R.color.whitesmoke);
 
+
         mIndicatorTranslationX= (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,80,getResources().getDisplayMetrics());
 
         mBottomImage.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
