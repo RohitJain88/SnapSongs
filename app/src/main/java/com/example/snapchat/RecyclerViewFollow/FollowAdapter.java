@@ -1,6 +1,7 @@
 package com.example.snapchat.RecyclerViewFollow;
 
 import android.content.Context;
+import android.os.Handler;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,6 +20,8 @@ public class FollowAdapter extends RecyclerView.Adapter<FollowViewHolders> {
     private List<FollowObject> usersList;
     private Context context;
     private String TAG="FollowAdapter";
+    private int TIME_OUT=1500;
+    public String userId;
 
     public FollowAdapter(List<FollowObject> usersList, Context context){
         this.usersList = usersList;
@@ -45,18 +48,22 @@ public class FollowAdapter extends RecyclerView.Adapter<FollowViewHolders> {
         holder.mFollow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                 userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
                 //Log.d(TAG, "onClick: "+userId);
-                if(!UserInformation.listFollowing.contains(usersList.get(holder.getLayoutPosition()).getUid())){
-                    holder.mFollow.setImageResource(R.drawable.ic_check_box_black);
-                    Log.d(TAG, "I m following");
-                    FirebaseDatabase.getInstance().getReference().child("users").child(userId).child("following").child(usersList.get(holder.getLayoutPosition()).getUid()).setValue(true);
-                }
-                else{
-                    holder.mFollow.setImageResource(R.drawable.ic_person_add_black);
-                    Log.d(TAG, "Follow");
-                    FirebaseDatabase.getInstance().getReference().child("users").child(userId).child("following").child(usersList.get(holder.getLayoutPosition()).getUid()).removeValue();
-                }
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (!UserInformation.listFollowing.contains(usersList.get(holder.getLayoutPosition()).getUid())) {
+                            holder.mFollow.setImageResource(R.drawable.ic_check_box_black);
+                            Log.d(TAG, "I m following");
+                            FirebaseDatabase.getInstance().getReference().child("users").child(userId).child("following").child(usersList.get(holder.getLayoutPosition()).getUid()).setValue(true);
+                        } else {
+                            holder.mFollow.setImageResource(R.drawable.ic_person_add_black);
+                            Log.d(TAG, "Follow");
+                            FirebaseDatabase.getInstance().getReference().child("users").child(userId).child("following").child(usersList.get(holder.getLayoutPosition()).getUid()).removeValue();
+                        }
+                    }
+                },TIME_OUT);
             }
         });
 

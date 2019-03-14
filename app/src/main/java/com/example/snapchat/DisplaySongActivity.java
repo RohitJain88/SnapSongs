@@ -148,7 +148,7 @@ public class DisplaySongActivity extends AppCompatActivity {
                         i.putExtras(bundle);
                         startActivity(i);
                     }*/
-                                     //   finish();
+                                       // onDestroy();
                                     }
                                 }
                             }, TIME_OUT);
@@ -178,6 +178,7 @@ public class DisplaySongActivity extends AppCompatActivity {
             mediaPlayer.stop();
 
         }
+        //onDestroy();
         super.onBackPressed();
          //this.finish();
     }

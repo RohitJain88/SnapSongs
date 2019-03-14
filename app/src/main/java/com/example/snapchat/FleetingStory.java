@@ -91,7 +91,8 @@ public class FleetingStory extends AppCompatActivity {
                         i.putExtras(bundle);
                         startActivity(i);
                     }*/
-                    finish();
+                    //finish();
+                   // onDestroy();
                 }
             }
         }, TIME_OUT);
@@ -101,7 +102,7 @@ public class FleetingStory extends AppCompatActivity {
         if(mediaPlayer!=null){
             flag=true;
             mediaPlayer.stop();
-
+         //   onDestroy();
         }
         super.onBackPressed();
        // this.finish();
