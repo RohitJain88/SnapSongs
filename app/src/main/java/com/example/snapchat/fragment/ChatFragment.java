@@ -103,7 +103,7 @@ public class ChatFragment extends Fragment {
             }
         });
         DatabaseReference emailDb = FirebaseDatabase.getInstance().getReference().child("users");
-        Query query = emailDb.orderByChild("email").startAt(mInput.getText().toString()).endAt(mInput.getText().toString() + "\uf8ff");
+        Query query = emailDb.orderByChild("name").startAt(mInput.getText().toString()).endAt(mInput.getText().toString() + "\uf8ff");
         query.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, String s) {
@@ -115,7 +115,7 @@ public class ChatFragment extends Fragment {
                 System.out.println("Uid is:"+uid);
 //                Log.d(TAG, "onChildAdded Uid: "+uid);
                 // A precautionary check as query will always return childs with email
-                if(dataSnapshot.child("email").getValue() !=null){
+                if(dataSnapshot.child("name").getValue() !=null){
                     email = dataSnapshot.child("email").getValue().toString();
                     user = dataSnapshot.child("name").getValue().toString();
                     //Log.d(TAG, "onChildAdded email: "+email);
