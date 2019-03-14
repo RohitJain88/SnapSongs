@@ -10,9 +10,6 @@ import com.example.snapchat.*;
 
 import java.util.List;
 
-/**
- * Created by simco on 1/24/2018.
- */
 
 public class StoryAdapter extends RecyclerView.Adapter<StoryViewHolders>{
 
@@ -34,8 +31,6 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryViewHolders>{
     public void onBindViewHolder(final StoryViewHolders holder, int position) {
         holder.mEmail.setText(usersList.get(position).getEmail());
         holder.mEmail.setTag(usersList.get(position).getUid());
-
-        //holder.mLayout.setTag(usersList.get(position).getCharOrStory());
     }
 
     @Override

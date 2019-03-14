@@ -45,12 +45,6 @@ public class ChatFragment extends Fragment {
     public static ChatFragment newInstance(){
         ChatFragment fragment=new ChatFragment();
         return fragment;
-
-
-
-
-
-
     }
 
 
@@ -107,22 +101,17 @@ public class ChatFragment extends Fragment {
         query.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, String s) {
-                String email ="";
                 String user ="";
                 //Gives uid of each users returned to us
 
                 String uid = dataSnapshot.getRef().getKey();
                 System.out.println("Uid is:"+uid);
-//                Log.d(TAG, "onChildAdded Uid: "+uid);
+
                 // A precautionary check as query will always return childs with email
                 if(dataSnapshot.child("name").getValue() !=null){
-                    email = dataSnapshot.child("email").getValue().toString();
                     user = dataSnapshot.child("name").getValue().toString();
-                    //Log.d(TAG, "onChildAdded email: "+email);
+                    Log.d(TAG, "onChildAdded name: "+user);
                 }
-
-                //Log.d(TAG, "NAME: "+FirebaseDatabase.getInstance().getReference().child("users").child(userId).child("name").);
-                //Log.d(TAG, "Name: "+userName);
 
                 if(!user.equals(userName)){
                     FollowObject obj = new FollowObject(user,uid);

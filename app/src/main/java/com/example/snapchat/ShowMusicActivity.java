@@ -57,7 +57,6 @@ public class ShowMusicActivity extends AppCompatActivity {
 
     private ArrayList<SongInfo> _songs=new ArrayList<>();
     RecyclerView recyclerView;
-    //SeekBar seekBar;
     SongAdapter songAdapter;
     MediaPlayer mediaPlayer;
     ImageView prev;
@@ -65,7 +64,6 @@ public class ShowMusicActivity extends AppCompatActivity {
     FFmpeg ffmpeg;
     String s="";
     String songName="",artistName="";
-    //ArrayList<String> al;
     StorageReference songRef;
     String Uid;
     private static int TIME_OUT=2000;
@@ -100,13 +98,9 @@ public class ShowMusicActivity extends AppCompatActivity {
         } catch (FFmpegNotSupportedException e) {
             // Handle if FFmpeg is not supported by device
         }
-        //loadFFMpegBinary();
         recyclerView= (RecyclerView)findViewById(R.id.recyclerView);
-        //seekBar= (SeekBar)findViewById(R.id.seekBar);
         mediaPlayer =new MediaPlayer();
 
-        // SongInfo s=new SongInfo("Cheap Thrills","Sia","https://open.spotify.com/album/1ZMYMTP0S4hp9AlGkAWWjt");
-        //  _songs.add(s);
         songAdapter=new SongAdapter(this, _songs);
         LinearLayoutManager linearLayoutManager =new LinearLayoutManager(this);
         DividerItemDecoration dividerItemDecoration =  new DividerItemDecoration(recyclerView.getContext(),linearLayoutManager.getOrientation());
@@ -129,16 +123,11 @@ public class ShowMusicActivity extends AppCompatActivity {
                     public void run() {
                         try {
                             if(b.getId()==R.id.btnAction && flag==0 && prev.equals(b)){
-                               // b.setText("Play");
-                                //prev.setImageResource(R.drawable.play);
-                                //Log.d(TAG, "run: "+);
                                 flag=1;
                                 b.setImageResource(R.drawable.play);
-                                //b.setTag(R.drawable.play);
                                 mediaPlayer.stop();
                                 mediaPlayer.reset();
                                 mediaPlayer.release();
-                                //prev=b;
                                 mediaPlayer=null;
                             }else if(b.getId()==R.id.btnShare){
                                 Intent intent= new Intent(ShowMusicActivity.this, MainActivity.class);
@@ -148,30 +137,16 @@ public class ShowMusicActivity extends AppCompatActivity {
                                     mediaPlayer.reset();
                                     mediaPlayer.release();
                                     mediaPlayer=null;
-                                    // if(!prev.getText().equals("Share"))
-                                    //Share.setImageResource(R.drawable.play);
-                                    //f(flag==0){
                                     flag=1;
-                                        prev.setImageResource(R.drawable.play);//}
+                                    prev.setImageResource(R.drawable.play);
                                 }
                                MediaMetadataRetriever metaRetriever = new MediaMetadataRetriever();
                                metaRetriever.setDataSource(obj.songUrl);
-                                String duration =
-                                        metaRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION);
-//                               // Log.v("time", duration);
-                                long dur = Long.parseLong(duration);
+                               String duration = metaRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION);
+                               long dur = Long.parseLong(duration);
                                String seconds = String.valueOf((dur % 60000) / 1000);
                                int sec=Integer.parseInt(seconds);
-                              // System.out.println(sec);
-                                ArrayList<String> al = new ArrayList<>();
-                             /*  if(sec<=30){
-
-                                   al.add(obj.songName);
-                                   al.add(obj.artistName);
-                                   al.add(obj.songUrl);
-                               }else {*/
-//
-//                                //Log.v("seconds", seconds);
+                               ArrayList<String> al = new ArrayList<>();
                                String minutes = String.valueOf(dur / 60000);
                                 int min=Integer.parseInt(minutes);
                                    al.add(obj.songName);
@@ -188,15 +163,6 @@ public class ShowMusicActivity extends AppCompatActivity {
                                    }else{
                                 String[] command = {"-y", "-i", obj.songUrl, "-ss", "00:15", "-to", "00:30", "-c", "copy", s};
                                    execute(command);}
-//                                   new Handler().postDelayed(new Runnable() {
-//                                       @Override
-//                                       public void run() {
-//                                        //   saveToStories(obj.songName,obj.artistName,s);
-//                                       }
-//                                   }, TIME_OUT);
-
-                          //     }
-                                // bundle.putStringArray("cmd",command);
                                 bundle.putStringArrayList("info",al);
                                 intent.putExtras(bundle);
                                // MusicFragment f = new MusicFragment();
@@ -205,8 +171,6 @@ public class ShowMusicActivity extends AppCompatActivity {
                             }
                             else if(mediaPlayer==null || (b.getId()==R.id.btnAction && flag==1 && !mediaPlayer.isPlaying())) {
                                 Log.d(TAG, "iii: "+R.id.btnAction);
-
-                                // String cmd[]={"--upgrade"};
                                 mediaPlayer = new MediaPlayer();
                                 mediaPlayer.setDataSource(obj.songUrl);
                                 mediaPlayer.prepareAsync();
@@ -214,9 +178,6 @@ public class ShowMusicActivity extends AppCompatActivity {
                                     @Override
                                     public void onPrepared(MediaPlayer mp) {
                                         mp.start();
-                                       // seekBar.setProgress(0);
-                                       // seekBar.setMax(mp.getDuration());
-
                                     }
                                 });
                                 flag=0;
@@ -224,12 +185,8 @@ public class ShowMusicActivity extends AppCompatActivity {
                                 prev=b;
                                 b.setImageResource(R.drawable.stop);
                                 prev.setTag(R.drawable.stop);
-                                //prev=b;
-                                //b.setText("Stop");
                             }else if(mediaPlayer!=null && b.getId()==R.id.btnAction && mediaPlayer.isPlaying()){
-                                //prev.setText("Play");
                                 prev.setImageResource(R.drawable.play);
-                                //Action.setImageResource(R.drawable.play);
                                 mediaPlayer.stop();
                                 mediaPlayer.reset();
                                 mediaPlayer.release();
@@ -241,8 +198,6 @@ public class ShowMusicActivity extends AppCompatActivity {
                                     @Override
                                     public void onPrepared(MediaPlayer mp) {
                                         mp.start();
-                                      //  seekBar.setProgress(0);
-                                     //   seekBar.setMax(mp.getDuration());
                                     }
                                 });
                                 //prev=b;
@@ -275,15 +230,6 @@ public class ShowMusicActivity extends AppCompatActivity {
         final DatabaseReference userStoryDb = FirebaseDatabase.getInstance().getReference().child("users").child(Uid).child("story");
         final DatabaseReference userStoryDb1 = FirebaseDatabase.getInstance().getReference().child("users").child(Uid);
         final String key = userStoryDb.push().getKey();
-
-//        sRef = FirebaseStorage.getInstance().getReference().child("captures").child(key);
-
-//        pathtToSong(s, songRef, songName, artistName);
-
-//        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-//        //rotateBitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-//        byte[] dataToUpload = baos.toByteArray();
-//        UploadTask uploadTask = filePath.putBytes(dataToUpload);
         Uri file = Uri.fromFile(new File(s));
         songRef = FirebaseStorage.getInstance().getReference().child("captureSongs/"+file.getLastPathSegment());
         UploadTask uploadTask = songRef.putFile(file);
@@ -298,7 +244,6 @@ public class ShowMusicActivity extends AppCompatActivity {
         }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                //Uri imageUrl = taskSnapshot.getDownloadUrl();
                 final Calendar cal = Calendar.getInstance(Locale.ENGLISH);
                 songRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
@@ -322,7 +267,6 @@ public class ShowMusicActivity extends AppCompatActivity {
                         mapToUpload.put("timestampEnd",endTimestamp);
                         mapToUpload.put("timeBeg",starttime);
                         mapToUpload.put("timeEnd",endtime);
-                        //Log.d(TAG, "onSuccess: "+ userStoryDb);
                         userStoryDb1.addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -360,9 +304,7 @@ public class ShowMusicActivity extends AppCompatActivity {
 
     public void execute(String[] cmd){
         ffmpeg = FFmpeg.getInstance(ShowMusicActivity.this);
-        //Toast.makeText(MainActivity.this, Arrays.toString(cmd), Toast.LENGTH_LONG).show();
         try {
-            // to execute "ffmpeg -version" command you just need to pass "-version"
             ffmpeg.execute(cmd, new ExecuteBinaryResponseHandler() {
 
                 @Override
@@ -377,14 +319,11 @@ public class ShowMusicActivity extends AppCompatActivity {
 
                 @Override
                 public void onFailure(String message) {
-                    // System.out.println(message);
                     Toast.makeText(ShowMusicActivity.this,"Failed", Toast.LENGTH_LONG).show();
                 }
 
                 @Override
                 public void onSuccess(String message) {
-                    // while(true)
-                    //System.out.println(message);
                     saveToStories(songName,artistName,s);
                     Toast.makeText(ShowMusicActivity.this,"Trimmed", Toast.LENGTH_LONG).show();
                 }
@@ -397,46 +336,6 @@ public class ShowMusicActivity extends AppCompatActivity {
         }
     }
 
-
-
-
- /*   private void execFFmpegCommand(final String command) {
-        try {
-            ffmpeg.execute(command, new ExecuteBinaryResponseHandler() {
-                @Override
-                public void onFailure(String s) {
-                    Log.e("FFMPEG", "FAILED with output : " + s);
-                }
-
-                @Override
-                public void onSuccess(String s) {
-                    Log.e("FFMPEG", "SUCCESS with output : " + s);
-                }
-
-                @Override
-                public void onProgress(String s) {
-                    Log.e("FFMPEG", "Started command : ffmpeg " + command);
-                    Log.e("FFMPEG", "progress : " + s);
-                }
-
-                @Override
-                public void onStart() {
-                    Log.e("FFMPEG", "Started command : ffmpeg " + command);
-
-                }
-
-                @Override
-                public void onFinish() {
-                    Log.e("FFMPEG", "Finished command : ffmpeg " + command);
-
-
-
-                }
-            });
-        } catch (FFmpegCommandAlreadyRunningException e) {
-            // do nothing for now
-        }
-    }*/
  public void onBackPressed(){
      if(mediaPlayer!=null){
         // flag=true;
@@ -471,9 +370,6 @@ public class ShowMusicActivity extends AppCompatActivity {
             requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 123);
             return;
         }
-
-        // loadSongs();
-
     }
 
     private void CheckPermission(){
@@ -483,9 +379,7 @@ public class ShowMusicActivity extends AppCompatActivity {
             requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 123);
             return;
         }
-
         loadSongs();
-
     }
 
     @Override
@@ -501,7 +395,6 @@ public class ShowMusicActivity extends AppCompatActivity {
             default:
                 super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
-
     }
 
     private void loadSongs(){

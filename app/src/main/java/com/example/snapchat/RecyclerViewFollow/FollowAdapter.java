@@ -38,9 +38,8 @@ public class FollowAdapter extends RecyclerView.Adapter<FollowViewHolders> {
 
     @Override
     public void onBindViewHolder(final FollowViewHolders holder, int position) {
-
-        //int id = getResources().getIdentifier("yourpackagename:drawable/" + StringGenerated, null, null);
         holder.mEmail.setText(usersList.get(position).getEmail());
+
         //Changing the button text according to logged-in user following's
         if(UserInformation.listFollowing.contains(usersList.get(holder.getLayoutPosition()).getUid())){
             holder.mFollow.setImageResource(R.drawable.ic_check_box_black);
@@ -54,8 +53,8 @@ public class FollowAdapter extends RecyclerView.Adapter<FollowViewHolders> {
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                 userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                //Log.d(TAG, "onClick: "+userId);
+                        userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                        Log.d(TAG, "onClick: "+userId);
 
                         if (!UserInformation.listFollowing.contains(usersList.get(holder.getLayoutPosition()).getUid())) {
                             holder.mFollow.setImageResource(R.drawable.ic_check_box_black);

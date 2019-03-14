@@ -50,9 +50,6 @@ public class StoryFragment extends Fragment {
         mAdapter = new StoryAdapter(getDataSet(), getContext());
         mRecyclerView.setAdapter(mAdapter);
         mRefresh = view.findViewById(R.id.Refresh);
-        //ImageView imageView=(ImageView)view.findViewById(R.id.imageView);
-        //LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(20, 20);
-        //imageView.setLayoutParams(params);
         mRefresh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
