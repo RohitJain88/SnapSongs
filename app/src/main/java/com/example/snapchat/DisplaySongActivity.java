@@ -105,7 +105,7 @@ public class DisplaySongActivity extends AppCompatActivity {
 
                                 mediaPlayer = new MediaPlayer();
                                 mediaPlayer.setDataSource(songUrl);
-                                mediaPlayer.prepareAsync();
+                                mediaPlayer.prepare();
                                 mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
                                     @Override
                                     public void onPrepared(MediaPlayer mp) {

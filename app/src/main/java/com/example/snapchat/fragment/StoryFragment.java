@@ -81,6 +81,7 @@ public class StoryFragment extends Fragment {
 
     private void listenForData() {
         for (int i = 0; i < UserInformation.listFollowing.size(); i++){
+
             DatabaseReference followingStoryDb = FirebaseDatabase.getInstance().getReference().child("users").child(UserInformation.listFollowing.get(i));
 
             followingStoryDb.addValueEventListener(new ValueEventListener() {
