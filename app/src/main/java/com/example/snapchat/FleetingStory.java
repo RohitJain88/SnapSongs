@@ -55,7 +55,7 @@ public class FleetingStory extends AppCompatActivity {
 
             mediaPlayer = new MediaPlayer();
             mediaPlayer.setDataSource(arrayList.get(2));
-            mediaPlayer.prepareAsync();
+            mediaPlayer.prepare();
             mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
                 @Override
                 public void onPrepared(MediaPlayer mp) {
@@ -102,6 +102,9 @@ public class FleetingStory extends AppCompatActivity {
         if(mediaPlayer!=null){
             flag=true;
             mediaPlayer.stop();
+            mediaPlayer.reset();
+            mediaPlayer.release();
+            mediaPlayer=null;
          //   onDestroy();
         }
         super.onBackPressed();

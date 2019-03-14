@@ -116,6 +116,7 @@ public class ShowMusicActivity extends AppCompatActivity {
          Action=(ImageView)findViewById(R.id.btnAction);
         Share=(ImageView)findViewById(R.id.btnShare);
 
+
         songAdapter.setOnItemClickListener(new SongAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(final ImageView b, View v, final SongInfo obj, int position) {
@@ -440,6 +441,9 @@ public class ShowMusicActivity extends AppCompatActivity {
      if(mediaPlayer!=null){
         // flag=true;
          mediaPlayer.stop();
+         mediaPlayer.reset();
+         mediaPlayer.release();
+         mediaPlayer=null;
 
      }
      super.onBackPressed();

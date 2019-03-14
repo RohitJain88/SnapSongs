@@ -1,6 +1,7 @@
 package com.example.snapchat.RecyclerViewFollow;
 
 import android.content.Context;
+import android.media.MediaPlayer;
 import android.os.Handler;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -22,6 +23,7 @@ public class FollowAdapter extends RecyclerView.Adapter<FollowViewHolders> {
     private String TAG="FollowAdapter";
     private int TIME_OUT=2000;
     public String userId;
+    public MediaPlayer mediaPlayer=null;
 
     public FollowAdapter(List<FollowObject> usersList, Context context){
         this.usersList = usersList;
@@ -36,6 +38,7 @@ public class FollowAdapter extends RecyclerView.Adapter<FollowViewHolders> {
 
     @Override
     public void onBindViewHolder(final FollowViewHolders holder, int position) {
+
         //int id = getResources().getIdentifier("yourpackagename:drawable/" + StringGenerated, null, null);
         holder.mEmail.setText(usersList.get(position).getEmail());
         //Changing the button text according to logged-in user following's
@@ -58,10 +61,22 @@ public class FollowAdapter extends RecyclerView.Adapter<FollowViewHolders> {
                             holder.mFollow.setImageResource(R.drawable.ic_check_box_black);
                             Log.d(TAG, "I m following");
                             FirebaseDatabase.getInstance().getReference().child("users").child(userId).child("following").child(usersList.get(holder.getLayoutPosition()).getUid()).setValue(true);
+                            if(mediaPlayer!=null){
+                                mediaPlayer.stop();
+                                mediaPlayer.release();
+                                mediaPlayer.reset();
+                                mediaPlayer=null;
+                            }
                         } else {
                             holder.mFollow.setImageResource(R.drawable.ic_person_add_black);
                             Log.d(TAG, "Follow");
                             FirebaseDatabase.getInstance().getReference().child("users").child(userId).child("following").child(usersList.get(holder.getLayoutPosition()).getUid()).removeValue();
+                            if(mediaPlayer!=null){
+                                mediaPlayer.stop();
+                                mediaPlayer.release();
+                                mediaPlayer.reset();
+                                mediaPlayer=null;
+                            }
                         }
                     }
                 },TIME_OUT);
