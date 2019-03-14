@@ -101,7 +101,7 @@ public class MusicFragment extends Fragment {
         userDb.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Log.d(TAG, "Name: " + dataSnapshot.getValue().toString());
+                //Log.d(TAG, "Name: " + dataSnapshot.getValue().toString());
                 userName = dataSnapshot.getValue().toString();
                 mtext.setText(userName);
             }
