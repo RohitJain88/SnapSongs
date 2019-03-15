@@ -21,6 +21,7 @@ import java.util.regex.Pattern;
 
 public class LoginActivity extends AppCompatActivity {
 private Button mLogin;
+private Button mReset;
 private EditText mEmail,mPassword;
 private FirebaseAuth mAuth;
 private FirebaseAuth.AuthStateListener firebaseAuthStateListener;
@@ -45,8 +46,10 @@ private FirebaseAuth.AuthStateListener firebaseAuthStateListener;
         };
         mAuth=FirebaseAuth.getInstance();
         mLogin=findViewById(R.id.login);
+        mReset=findViewById(R.id.reset);
         mEmail=findViewById(R.id.email);
         mPassword=findViewById(R.id.password);
+
 
         mLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,6 +79,14 @@ private FirebaseAuth.AuthStateListener firebaseAuthStateListener;
             }
         });
 
+        mReset.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(),ResetActivity.class);
+                startActivity(intent);
+
+            }
+        });
 
     }
 
