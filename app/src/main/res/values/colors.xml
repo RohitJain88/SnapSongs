@@ -3,6 +3,12 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
+    <color name="purple_500">#9C27B0</color>
+    <color name="deep_purple_500">#673AB7</color>
+    <color name="indigo_500">#3F51B5</color>
+    <color name="blue_500">#2196F3</color>
+    <color name="cyan_500">#00BCD4</color>
+    <color name="light_blue_500">#03A9F4</color>
     <color name="white">#FFFFFF</color>
     <color name="ivory">#FFFFF0</color>
     <color name="lightyellow">#FFFFE0</color>
@@ -127,7 +133,7 @@
     <color name="lightseagreen">#20B2AA</color>
     <color name="dodgerblue">#1E90FF</color>
     <color name="midnightblue">#191970</color>
-    <color name="aqua">#00FFFF</color>
+    <!--<color name="aqua">#00FFFF</color>-->
     <color name="cyan">#00FFFF</color>
     <color name="springgreen">#00FF7F</color>
     <color name="lime">#00FF00</color>

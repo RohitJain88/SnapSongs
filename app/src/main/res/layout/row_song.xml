@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+
+    >
+
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="20dp"
+        android:orientation="horizontal"
+        android:paddingBottom="20dp"
+        >
+        <LinearLayout
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="vertical"
+            >
+            <TextView
+                android:id="@+id/SongName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:text="Song Name"
+                />
+            <TextView
+                android:id="@+id/ArtistName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Artist Name"/>
+
+
+        </LinearLayout>
+        <ImageView
+            android:id="@+id/btnAction"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_weight="0"
+            android:src="@drawable/play"
+            android:layout_margin="20dp"/>
+        <ImageView
+            android:id="@+id/btnShare"
+            android:layout_weight="0"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/share"
+            android:layout_margin="20dp"/>
+
+    </LinearLayout>
+</android.support.v7.widget.CardView>
+

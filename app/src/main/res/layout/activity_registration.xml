@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LoginActivity"
+    tools:context=".loginRegistration.LoginActivity"
     android:orientation="vertical"
     android:paddingLeft="18dp"
     android:paddingRight="18dp"
@@ -34,6 +34,7 @@
         android:background="#6ef4f4f4"
         android:drawablePadding="30dp"
         android:textColorHint="#fff"
+        android:drawableLeft="@drawable/ic_person_white_24dp"
         android:id="@+id/email"
 
       />
