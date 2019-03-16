@@ -5,4 +5,6 @@
     <string name="title_activity_post_songz">PostSongzActivity
 
     </string>
+    <string name="title_activity_view_follower">ViewFollowerActivity</string>
+    <string name="title_activity_view_folllower">ViewFolllowerActivity</string>
 </resources>

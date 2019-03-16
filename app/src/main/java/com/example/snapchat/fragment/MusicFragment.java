@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.example.snapchat.R;
 import com.example.snapchat.ShowMusicActivity;
+import com.example.snapchat.ViewFollowersActivity;
 import com.example.snapchat.loginRegistration.SplashScreenActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -32,6 +33,7 @@ import java.util.List;
 public class MusicFragment extends Fragment {
     private static final String TAG = "MusicFragment";
     private String userName;
+    private ImageView mviewFolowers;
 
     public static MusicFragment newInstance(){
         MusicFragment fragment = new MusicFragment();
@@ -51,6 +53,7 @@ public class MusicFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_music,container,false);
         ImageView mPost = view.findViewById(R.id.post);
         ImageView mlogout = view.findViewById(R.id.logout);
+        mviewFolowers = view.findViewById(R.id.ViewFollowers);
         final TextView mtext = view.findViewById(R.id.userName);
 
         CheckPermission();
@@ -92,6 +95,18 @@ public class MusicFragment extends Fragment {
         }
         catch(Exception e){
             Toast.makeText(getActivity().getApplicationContext(), "User Not logged In", Toast.LENGTH_LONG).show();
+        }
+        try{
+            mviewFolowers.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                Intent intent = new Intent(getContext(), ViewFollowersActivity.class);
+                startActivity(intent);
+                }
+            });
+        }
+        catch (Exception e){
+
         }
         return view;
     }
