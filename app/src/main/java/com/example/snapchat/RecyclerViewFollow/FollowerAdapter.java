@@ -25,7 +25,7 @@ import java.util.List;
 
 public class FollowerAdapter extends  RecyclerView.Adapter<FollowerViewHolder>{
 
-    private List<FollowObject> usersList;
+    private List<FollowerObject> usersList;
     private Context context;
     private String TAG="FollowAdapter";
     private int TIME_OUT=2000;
@@ -36,64 +36,26 @@ public class FollowerAdapter extends  RecyclerView.Adapter<FollowerViewHolder>{
     String followerName = "";
     DatabaseReference selfDb = null;
 
-//    public void updateFollowers() {
-//
-//            new Handler().postDelayed(new Runnable() {
-//                @Override
-//                public void run() {
-//                    userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-//                    Log.d(TAG, "onClick: " + userId);
-//
-//
-//                    if (!UserInformation.listFollowing.contains(usersList.get(holder.getLayoutPosition()).getUid())) {
-//                        //holder.mFollow.setImageResource(R.drawable.ic_check_box_black);
-//                        FirebaseDatabase.getInstance().getReference().child("users").child(usersList.get(holder.getLayoutPosition()).getUid()).child("followers").child(userId).setValue(true);
-//
-//                        //DatabaseReference userDb = FirebaseDatabase.getInstance().getReference("users").child(userId).child("name");
-//                        //followerName = FirebaseDatabase.getInstance().getReference().child("users").child(usersList.get(holder.getLayoutPosition()).getUid()).child("name")
-//
-//                        if (followerName != "" || followerName != null) {
-//                            mapToUpload = new HashMap<>();
-//                            mapToUpload.put("name", followerName);
-//                            userFollowersDb = FirebaseDatabase.getInstance().getReference().child("users").child(usersList.get(holder.getLayoutPosition()).getUid()).child("followers").child(userId);
-//                            userFollowersDb.addListenerForSingleValueEvent(new ValueEventListener() {
-//                                @Override
-//                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                                    userFollowersDb.setValue(mapToUpload);
-//                                }
-//
-//                                @Override
-//                                public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//                                }
-//                            });
-//                        }
-//
-//
-//                    } else {
-//                        //holder.mFollow.setImageResource(R.drawable.ic_person_add_black);
-//                        //Log.d(TAG, "Follow");
-//                        //FirebaseDatabase.getInstance().getReference().child("users").child(userId).child("following").child(usersList.get(holder.getLayoutPosition()).getUid()).removeValue();
-//                        FirebaseDatabase.getInstance().getReference().child("users").child(usersList.get(holder.getLayoutPosition()).getUid()).child("followers").child(userId).removeValue();
-//
-//                    }
-//
-//                }
-//            }, TIME_OUT);
-//
-//        }
-
+    public FollowerAdapter(List<FollowerObject> usersList, Context context){
+        this.usersList = usersList;
+        this.context = context;
+    }
 
     @NonNull
     @Override
     public FollowerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View layoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.recyclerview_view_followers, null);
-        FollowerViewHolder rcv = new FollowerViewHolder(layoutView);
-        return rcv;
+        FollowerViewHolder rcv1 = new FollowerViewHolder(layoutView);
+        return rcv1;
     }
 
     @Override
     public void onBindViewHolder(@NonNull final FollowerViewHolder holder, int position) {
+        holder.mUsername.setText(usersList.get(position).getuserName());
+        holder.mFollowing.setImageResource(R.drawable.ic_check_box_black);
+
+
+
         userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         selfDb = FirebaseDatabase.getInstance().getReference().child("users").child(userId);
         selfDb.addValueEventListener(new ValueEventListener() {
@@ -117,6 +79,6 @@ public class FollowerAdapter extends  RecyclerView.Adapter<FollowerViewHolder>{
 
     @Override
     public int getItemCount() {
-        return 0;
+        return this.usersList.size();
     }
 }

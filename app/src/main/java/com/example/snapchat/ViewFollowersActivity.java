@@ -14,6 +14,7 @@ import android.widget.ImageView;
 
 import com.example.snapchat.RecyclerViewFollow.FollowAdapter;
 import com.example.snapchat.RecyclerViewFollow.FollowObject;
+import com.example.snapchat.RecyclerViewFollow.FollowerAdapter;
 import com.example.snapchat.RecyclerViewFollow.FollowerObject;
 import com.example.snapchat.RecyclerViewStory.StoryObject;
 import com.example.snapchat.fragment.ChatFragment;
@@ -57,7 +58,7 @@ public class ViewFollowersActivity extends AppCompatActivity {
         mRecyclerView.setHasFixedSize(false);
         mLayoutManager = new LinearLayoutManager(getApplicationContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mAdapter = new FollowAdapter(getDataSet(), getApplicationContext());
+        mAdapter = new FollowerAdapter(getDataSet(), getApplicationContext());
         mRecyclerView.setAdapter(mAdapter);
 
         mSearch.setOnClickListener(new View.OnClickListener() {
@@ -74,70 +75,6 @@ public class ViewFollowersActivity extends AppCompatActivity {
         //This method is used to search emails based on the entered text
         private void listenForData() {
             String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-//            DatabaseReference userDb = FirebaseDatabase.getInstance().getReference("users").child(userId).child("followers");
-//
-//            userDb.addValueEventListener(new ValueEventListener() {
-//                @Override
-//                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                    Log.d(TAG, "Name: " + dataSnapshot.getValue().toString());
-//                    userName = dataSnapshot.getValue().toString();
-//                }
-//
-//                @Override
-//                public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//                }
-//            });
-
-//            DatabaseReference emailDb = FirebaseDatabase.getInstance().getReference().child("users").child(userId).child("followers");
-//            Query query = emailDb.orderByKey().startAt(mInput.getText().toString()).endAt(mInput.getText().toString() + "\uf8ff");
-//            query.addChildEventListener(new ChildEventListener() {
-//                @Override
-//                public void onChildAdded(@NonNull DataSnapshot dataSnapshot, String s) {
-//                    String user ="";
-//                    //Gives uid of each users returned to us
-//
-//                    String uid = dataSnapshot.getRef().getKey();
-//                    System.out.println("Uid is:"+uid);
-//
-//                    // A precautionary check as query will always return childs with email
-//                    if(dataSnapshot.child("name").getValue() !=null){
-//                        user = dataSnapshot.child("name").getValue().toString();
-//                        Log.d(TAG, "onChildAdded name: "+user);
-//                    }
-//
-//                    if(!user.equals(userName)){
-//                        FollowObject obj = new FollowObject(user,uid);
-//                        results.add(obj);
-//                        mAdapter.notifyDataSetChanged();
-//
-//                    }
-//                }
-//
-//
-//
-//                @Override
-//                public void onChildChanged(@NonNull DataSnapshot dataSnapshot, String s) {
-//
-//                }
-//
-//                @Override
-//                public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-//
-//                }
-//
-//                @Override
-//                public void onChildMoved(@NonNull DataSnapshot dataSnapshot, String s) {
-//
-//                }
-//
-//                @Override
-//                public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//                }
-//            });
-
-
             for (int i = 0; i < UserInformation.listFollowers.size(); i++){
 
                 DatabaseReference followingStoryDb = FirebaseDatabase.getInstance().getReference().child("users").child(UserInformation.listFollowers.get(i));
@@ -150,7 +87,7 @@ public class ViewFollowersActivity extends AppCompatActivity {
                         String name = dataSnapshot.child("name").getValue().toString();
                         String uid = dataSnapshot.getRef().getKey();
 
-                                FollowObject obj = new FollowObject(name, uid);
+                                FollowerObject obj = new FollowerObject(name, uid);
                                 Log.d(TAG, "onDataChange: "+obj);
                                 //If more than one story is present for the story
                                 if(!results.contains(obj)){
@@ -179,10 +116,10 @@ public class ViewFollowersActivity extends AppCompatActivity {
 
 
         //Will return all the users in the recycler view
-        private ArrayList<FollowObject> results = new ArrayList<>();
+        private ArrayList<FollowerObject> results = new ArrayList<>();
 
         //In the beginning of the search load up every single data
-        private ArrayList<FollowObject> getDataSet() {
+        private ArrayList<FollowerObject> getDataSet() {
             if(results.size()!=0){
                 clear();
             }

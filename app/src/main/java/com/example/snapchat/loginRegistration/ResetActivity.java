@@ -40,7 +40,7 @@ private EditText mResetbyEmail;
                             });
                 }
                 catch (Exception e){
-                    Toast.makeText(ResetActivity.this, "Please Enter Proper Email Id", Toast.LENGTH_LONG).show();
+                    Toast.makeText(ResetActivity.this, "Please Enter valid Email Id", Toast.LENGTH_LONG).show();
                 }
             }
         });

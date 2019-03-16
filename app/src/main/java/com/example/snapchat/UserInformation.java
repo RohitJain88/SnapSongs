@@ -3,6 +3,7 @@ package com.example.snapchat;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import com.example.snapchat.RecyclerViewFollow.FollowerObject;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
