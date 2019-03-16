@@ -65,14 +65,78 @@ public class ViewFollowersActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 clear();
-                listenForData();
+                getData();
             }
         });
         }
 
+    private void getData() {
+        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        //DatabaseReference userDb = FirebaseDatabase.getInstance().getReference("users").child(userId).child("followers");
+
+//        userDb.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                Log.d(TAG, "Name: " + dataSnapshot.getValue().toString());
+//                userName = dataSnapshot.child("name").getValue().toString();
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//            }
+    //    });
+        DatabaseReference emailDb = FirebaseDatabase.getInstance().getReference().child("users").child(userId).child("followers");
+        Query query = emailDb.orderByChild("name").startAt(mInput.getText().toString()).endAt(mInput.getText().toString() + "\uf8ff");
+        query.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, String s) {
+                String user ="";
+                //Gives uid of each users returned to us
+
+                String uid = dataSnapshot.getRef().getKey();
+                System.out.println("Uid is:"+uid);
+
+                // A precautionary check as query will always return childs with email
+                if(dataSnapshot.child("name").getValue() !=null){
+                    user = dataSnapshot.child("name").getValue().toString();
+                    Log.d(TAG, "onChildAdded name: "+user);
+                }
+
+                if(!user.equals(userName)){
+                    FollowerObject obj = new FollowerObject(user,uid);
+                    results.add(obj);
+                    mAdapter.notifyDataSetChanged();
+
+                }
+            }
 
 
-        //This method is used to search emails based on the entered text
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+
+    //This method is used to search emails based on the entered text
         private void listenForData() {
             String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
             for (int i = 0; i < UserInformation.listFollowers.size(); i++){
