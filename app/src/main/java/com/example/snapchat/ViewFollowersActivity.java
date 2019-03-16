@@ -14,6 +14,8 @@ import android.widget.ImageView;
 
 import com.example.snapchat.RecyclerViewFollow.FollowAdapter;
 import com.example.snapchat.RecyclerViewFollow.FollowObject;
+import com.example.snapchat.RecyclerViewFollow.FollowerObject;
+import com.example.snapchat.RecyclerViewStory.StoryObject;
 import com.example.snapchat.fragment.ChatFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
@@ -72,67 +74,100 @@ public class ViewFollowersActivity extends AppCompatActivity {
         //This method is used to search emails based on the entered text
         private void listenForData() {
             String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-            DatabaseReference userDb = FirebaseDatabase.getInstance().getReference("users").child(userId).child("name");
+//            DatabaseReference userDb = FirebaseDatabase.getInstance().getReference("users").child(userId).child("followers");
+//
+//            userDb.addValueEventListener(new ValueEventListener() {
+//                @Override
+//                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                    Log.d(TAG, "Name: " + dataSnapshot.getValue().toString());
+//                    userName = dataSnapshot.getValue().toString();
+//                }
+//
+//                @Override
+//                public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//                }
+//            });
 
-            userDb.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    Log.d(TAG, "Name: " + dataSnapshot.getValue().toString());
-                    userName = dataSnapshot.getValue().toString();
-                }
+//            DatabaseReference emailDb = FirebaseDatabase.getInstance().getReference().child("users").child(userId).child("followers");
+//            Query query = emailDb.orderByKey().startAt(mInput.getText().toString()).endAt(mInput.getText().toString() + "\uf8ff");
+//            query.addChildEventListener(new ChildEventListener() {
+//                @Override
+//                public void onChildAdded(@NonNull DataSnapshot dataSnapshot, String s) {
+//                    String user ="";
+//                    //Gives uid of each users returned to us
+//
+//                    String uid = dataSnapshot.getRef().getKey();
+//                    System.out.println("Uid is:"+uid);
+//
+//                    // A precautionary check as query will always return childs with email
+//                    if(dataSnapshot.child("name").getValue() !=null){
+//                        user = dataSnapshot.child("name").getValue().toString();
+//                        Log.d(TAG, "onChildAdded name: "+user);
+//                    }
+//
+//                    if(!user.equals(userName)){
+//                        FollowObject obj = new FollowObject(user,uid);
+//                        results.add(obj);
+//                        mAdapter.notifyDataSetChanged();
+//
+//                    }
+//                }
+//
+//
+//
+//                @Override
+//                public void onChildChanged(@NonNull DataSnapshot dataSnapshot, String s) {
+//
+//                }
+//
+//                @Override
+//                public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+//
+//                }
+//
+//                @Override
+//                public void onChildMoved(@NonNull DataSnapshot dataSnapshot, String s) {
+//
+//                }
+//
+//                @Override
+//                public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//                }
+//            });
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                }
-            });
-            DatabaseReference emailDb = FirebaseDatabase.getInstance().getReference().child("users").child(userId).child("followers");
-            Query query = emailDb.orderByKey().startAt(mInput.getText().toString()).endAt(mInput.getText().toString() + "\uf8ff");
-            query.addChildEventListener(new ChildEventListener() {
-                @Override
-                public void onChildAdded(@NonNull DataSnapshot dataSnapshot, String s) {
-                    String user ="";
-                    //Gives uid of each users returned to us
+            for (int i = 0; i < UserInformation.listFollowers.size(); i++){
 
-                    String uid = dataSnapshot.getRef().getKey();
-                    System.out.println("Uid is:"+uid);
+                DatabaseReference followingStoryDb = FirebaseDatabase.getInstance().getReference().child("users").child(UserInformation.listFollowers.get(i));
 
-                    // A precautionary check as query will always return childs with email
-                    if(dataSnapshot.child("name").getValue() !=null){
-                        user = dataSnapshot.child("name").getValue().toString();
-                        Log.d(TAG, "onChildAdded name: "+user);
+                followingStoryDb.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        //Getting Information from database and checking if the timestamp lies in between the 24 hours timestamp for the story
+                        Log.d(TAG, "listenForData: "+dataSnapshot);
+                        String name = dataSnapshot.child("name").getValue().toString();
+                        String uid = dataSnapshot.getRef().getKey();
+
+                                FollowObject obj = new FollowObject(name, uid);
+                                Log.d(TAG, "onDataChange: "+obj);
+                                //If more than one story is present for the story
+                                if(!results.contains(obj)){
+                                    Log.d(TAG, "onDataAdd: "+obj);
+                                    results.add(obj);
+                                    mAdapter.notifyDataSetChanged();
+                                }
+                            }
+
+
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
                     }
+                });
+            }
 
-                    if(!user.equals(userName)){
-                        FollowObject obj = new FollowObject(user,uid);
-                        results.add(obj);
-                        mAdapter.notifyDataSetChanged();
-
-                    }
-                }
-
-
-
-                @Override
-                public void onChildChanged(@NonNull DataSnapshot dataSnapshot, String s) {
-
-                }
-
-                @Override
-                public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-
-                }
-
-                @Override
-                public void onChildMoved(@NonNull DataSnapshot dataSnapshot, String s) {
-
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                }
-            });
         }
 
         //This method clears the search result on each search done

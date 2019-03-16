@@ -91,15 +91,12 @@ public class FollowAdapter extends RecyclerView.Adapter<FollowViewHolders> {
                         userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
                         Log.d(TAG, "onClick: "+userId);
 
-
+                        //FollowerAdapter.updateFollowers();
                         if (!UserInformation.listFollowing.contains(usersList.get(holder.getLayoutPosition()).getUid())) {
                             holder.mFollow.setImageResource(R.drawable.ic_check_box_black);
                             Log.d(TAG, "I m following");
                             FirebaseDatabase.getInstance().getReference().child("users").child(userId).child("following").child(usersList.get(holder.getLayoutPosition()).getUid()).setValue(true);
                             FirebaseDatabase.getInstance().getReference().child("users").child(usersList.get(holder.getLayoutPosition()).getUid()).child("followers").child(userId).setValue(true);
-
-                            //DatabaseReference userDb = FirebaseDatabase.getInstance().getReference("users").child(userId).child("name");
-                            //followerName = FirebaseDatabase.getInstance().getReference().child("users").child(usersList.get(holder.getLayoutPosition()).getUid()).child("name")
 
                             if (followerName!="" ||followerName!=null ) {
                                 mapToUpload = new HashMap<>();
@@ -117,11 +114,6 @@ public class FollowAdapter extends RecyclerView.Adapter<FollowViewHolders> {
                                     }
                                 });
                             }
-
-
-
-
-
 
                         } else {
                             holder.mFollow.setImageResource(R.drawable.ic_person_add_black);

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
@@ -32,6 +33,7 @@ import java.util.List;
 
 public class MusicFragment extends Fragment {
     private static final String TAG = "MusicFragment";
+    private int TIME_OUT=1500;
     private String userName;
     private ImageView mviewFolowers;
 
@@ -96,14 +98,23 @@ public class MusicFragment extends Fragment {
         catch(Exception e){
             Toast.makeText(getActivity().getApplicationContext(), "User Not logged In", Toast.LENGTH_LONG).show();
         }
+
         try{
-            mviewFolowers.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                Intent intent = new Intent(getContext(), ViewFollowersActivity.class);
-                startActivity(intent);
-                }
-            });
+
+                    mviewFolowers.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            new Handler().postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                            Intent intent = new Intent(getContext(), ViewFollowersActivity.class);
+
+                            startActivity(intent);
+                                }
+                            },TIME_OUT);
+                        }
+                    });
+
         }
         catch (Exception e){
 
