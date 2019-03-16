@@ -9,7 +9,6 @@ import android.widget.TextView;
 import com.example.snapchat.*;
 
 public class FollowViewHolders extends RecyclerView.ViewHolder {
-    //public ImageView mFollowers;
     public TextView mEmail;
     public ImageView mFollow;
 
@@ -17,7 +16,7 @@ public class FollowViewHolders extends RecyclerView.ViewHolder {
         super(itemView);
         mEmail = itemView.findViewById(R.id.email);
         mFollow = itemView.findViewById(R.id.follow);
-        //mFollowers = itemView.findViewById(R.id.followingUser);
+
     }
 
 }

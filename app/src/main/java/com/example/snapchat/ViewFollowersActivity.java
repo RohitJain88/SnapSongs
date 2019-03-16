@@ -39,8 +39,6 @@ public class ViewFollowersActivity extends AppCompatActivity {
     EditText mInput;
     private FirebaseAuth auth;
     private static final String TAG = "FindUserActivity";
-    private Set<FollowObject> finalResults= new HashSet<>();;
-    private ArrayList<FollowObject> finalResultslist= new ArrayList<>();
     private String userName;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,20 +70,6 @@ public class ViewFollowersActivity extends AppCompatActivity {
 
     private void getData() {
         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        //DatabaseReference userDb = FirebaseDatabase.getInstance().getReference("users").child(userId).child("followers");
-
-//        userDb.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                Log.d(TAG, "Name: " + dataSnapshot.getValue().toString());
-//                userName = dataSnapshot.child("name").getValue().toString();
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//            }
-    //    });
         DatabaseReference emailDb = FirebaseDatabase.getInstance().getReference().child("users").child(userId).child("followers");
         Query query = emailDb.orderByChild("name").startAt(mInput.getText().toString()).endAt(mInput.getText().toString() + "\uf8ff");
         query.addChildEventListener(new ChildEventListener() {
