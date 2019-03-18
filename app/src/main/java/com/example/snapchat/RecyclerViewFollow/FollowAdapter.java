@@ -40,9 +40,15 @@ public class FollowAdapter extends RecyclerView.Adapter<FollowViewHolders> {
     public String userId;
     public MediaPlayer mediaPlayer=null;
     private HashMap<String, String> mapToUpload;
+    private HashMap<String, Integer> countMap = new HashMap<>();
+    private HashMap<String, Integer> countFollowersMap;
+
+    int count = 0;
     DatabaseReference userFollowersDb = null;
+    DatabaseReference userCount = null;
     String followerName = "";
     DatabaseReference selfDb = null;
+    int currentFollowercount;
 
     public FollowAdapter(List<FollowObject> usersList, Context context){
         this.usersList = usersList;
@@ -101,18 +107,111 @@ public class FollowAdapter extends RecyclerView.Adapter<FollowViewHolders> {
                             if (followerName!="" ||followerName!=null ) {
                                 mapToUpload = new HashMap<>();
                                 mapToUpload.put("name", followerName);
-                                userFollowersDb = FirebaseDatabase.getInstance().getReference().child("users").child(usersList.get(holder.getLayoutPosition()).getUid()).child("followers").child(userId);
-                                userFollowersDb.addListenerForSingleValueEvent(new ValueEventListener() {
-                                    @Override
-                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                        userFollowersDb.setValue(mapToUpload);
-                                    }
 
-                                    @Override
-                                    public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                                    }
-                                });
+                                userFollowersDb = FirebaseDatabase.getInstance().getReference().child("users").child(usersList.get(holder.getLayoutPosition()).getUid()).child("countFollowers");
+                                if (userFollowersDb!=null){
+
+                                    userFollowersDb.addValueEventListener(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                            try {
+                                                if (dataSnapshot.getValue() != null) {
+                                                    try {
+                                                        Log.d("TAG", "hihhugJJJJ" + dataSnapshot.getValue()); // your name values you will get here
+                                                        currentFollowercount = (int)(dataSnapshot.child("count").getValue());
+                                                        //System.out.println(dataSnapshot.getValue());
+                                                    } catch (Exception e) {
+                                                        e.printStackTrace();
+                                                    }
+                                                } else {
+                                                    Log.e("TAG", " it's null.");
+                                                }
+                                            } catch (Exception e) {
+                                                e.printStackTrace();
+                                            }
+
+                                        }
+
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                        }
+                                    });
+
+                                    FirebaseDatabase.getInstance().getReference().child("users").child(usersList.get(holder.getLayoutPosition()).getUid()).child("countFollowers").removeValue();
+                                    FirebaseDatabase.getInstance().getReference().child("users").child(usersList.get(holder.getLayoutPosition()).getUid()).child("countFollowers").setValue(true);
+                                    userFollowersDb = FirebaseDatabase.getInstance().getReference().child("users").child(usersList.get(holder.getLayoutPosition()).getUid()).child("countFollowers");
+                                    userFollowersDb.addListenerForSingleValueEvent(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                            countFollowersMap = new HashMap<>();
+                                            countFollowersMap.put("count",currentFollowercount+1);
+                                            userFollowersDb.setValue(countFollowersMap);
+                                        }
+
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                        }
+                                    });
+
+                                }else{
+
+                                    FirebaseDatabase.getInstance().getReference().child("users").child(usersList.get(holder.getLayoutPosition()).getUid()).child("countFollowers").setValue(true);
+                                    userFollowersDb = FirebaseDatabase.getInstance().getReference().child("users").child(usersList.get(holder.getLayoutPosition()).getUid()).child("countFollowers");
+                                    userFollowersDb.addListenerForSingleValueEvent(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                            countFollowersMap = new HashMap<>();
+                                            countFollowersMap.put("count",1);
+                                            userFollowersDb.setValue(countFollowersMap);
+                                        }
+
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                        }
+                                    });
+
+                                }
+
+
+                                count+=1;
+                                countMap.put("count", count);
+                                userCount = FirebaseDatabase.getInstance().getReference().child("users").child(userId).child("countFollowing");
+                                if (userCount!=null){
+                                    FirebaseDatabase.getInstance().getReference().child("users").child(userId).child("countFollowing").removeValue();
+                                    FirebaseDatabase.getInstance().getReference().child("users").child(userId).child("countFollowing").setValue(true);
+                                    userCount = FirebaseDatabase.getInstance().getReference().child("users").child(userId).child("countFollowing");
+                                    userCount.addListenerForSingleValueEvent(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                            userCount.setValue(countMap);
+                                        }
+
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                        }
+                                    });
+
+                                }else{
+                                    FirebaseDatabase.getInstance().getReference().child("users").child(userId).child("countFollowing").setValue(true);
+                                    userCount = FirebaseDatabase.getInstance().getReference().child("users").child(userId).child("countFollowing");
+                                    userCount.addListenerForSingleValueEvent(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                            userCount.setValue(countMap);
+                                        }
+
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                        }
+                                    });
+                                }
+
                             }
 
                         } else {
@@ -120,6 +219,68 @@ public class FollowAdapter extends RecyclerView.Adapter<FollowViewHolders> {
                             Log.d(TAG, "Follow");
                             FirebaseDatabase.getInstance().getReference().child("users").child(userId).child("following").child(usersList.get(holder.getLayoutPosition()).getUid()).removeValue();
                             FirebaseDatabase.getInstance().getReference().child("users").child(usersList.get(holder.getLayoutPosition()).getUid()).child("followers").child(userId).removeValue();
+
+
+                            userFollowersDb.addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                    try {
+                                        if (dataSnapshot.child("count").getValue() != null) {
+                                            try {
+                                                Log.e("TAG", "" + dataSnapshot.child("count").getValue()); // your name values you will get here
+                                                currentFollowercount = (int)(dataSnapshot.getValue());
+
+                                            } catch (Exception e) {
+                                                e.printStackTrace();
+                                            }
+                                        } else {
+                                            Log.e("TAG", " it's null.");
+                                        }
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
+                                    }
+
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                }
+                            });
+
+                            FirebaseDatabase.getInstance().getReference().child("users").child(usersList.get(holder.getLayoutPosition()).getUid()).child("countFollowers").removeValue();
+                            FirebaseDatabase.getInstance().getReference().child("users").child(usersList.get(holder.getLayoutPosition()).getUid()).child("countFollowers").setValue(true);
+                            userFollowersDb = FirebaseDatabase.getInstance().getReference().child("users").child(usersList.get(holder.getLayoutPosition()).getUid()).child("countFollowers");
+                            userFollowersDb.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                    countFollowersMap = new HashMap<>();
+                                    countFollowersMap.put("count",currentFollowercount-1);
+                                    userFollowersDb.setValue(countFollowersMap);
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                }
+                            });
+
+                            count-=1;
+                            countMap.put("count", count);
+                            FirebaseDatabase.getInstance().getReference().child("users").child(userId).child("countFollowing").removeValue();
+                            FirebaseDatabase.getInstance().getReference().child("users").child(userId).child("countFollowing").setValue(true);
+                            userCount = FirebaseDatabase.getInstance().getReference().child("users").child(userId).child("countFollowing");
+                            userCount.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                    userCount.setValue(countMap);
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                }
+                            });
 
                         }
 
